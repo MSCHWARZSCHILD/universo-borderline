@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos - Universo Borderline</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Fredoka+One&family=Krona+One&family=Lobster&family=Major+Mono+Display&family=Monoton&family=Press+Start+2P&family=Caveat:wght@700&family=Sacramento&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-violet: #8A2BE2;
+            --secondary-cyan: #00CED1;
+            --accent-magenta: #FF00FF;
+            --accent-green: #00FF7F;
+            --accent-blue: #1E90FF;
+            --accent-yellow: #FFD700;
+            --accent-red: #FF4500;
+
+            --text-color-light: #F0F0F0;
+            --text-color-medium: #A0A0A0;
+            --text-color-dark: #333333; 
+
+            --card-bg: rgba(30, 30, 50, 0.92);
+            --border-color: rgba(138, 43, 226, 0.7);
+            --dark-bg: #0A0A20;
+            --light-bg-article: #f0f4f8; 
+        }
+        
+        html {
+            scroll-behavior: smooth; 
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: var(--dark-bg);
+            color: var(--text-color-light);
+            line-height: 1.8;
+            font-family: 'Raleway', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex; 
+            flex-direction: column; 
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(138, 43, 226, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, rgba(30, 144, 255, 0.1) 0%, transparent 30%),
+                radial-gradient(circle at 10% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 25%);
+            background-size: 400% 400%; 
+            animation: gradientBackground 20s ease infinite;
+        }
+        
+        @keyframes gradientBackground {
+            0% { background-position: 0% 50%; } 
+            50% { background-position: 100% 50%; } 
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            width: 100%; 
+            max-width: 1100px; 
+            margin: 0 auto; 
+            padding: 0 20px; 
+            position: relative; 
+            z-index: 1;
+        }
+        
+        header {
+            background: rgba(10, 10, 32, 0.85); 
+            backdrop-filter: blur(12px); 
+            color: white; 
+            padding: 1rem 0; 
+            position: fixed; 
+            top: 0; 
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 2px solid var(--accent-magenta); 
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);
+            transition: all 0.4s ease;
+            display: flex;
+            justify-content: center;
+        }
+        
+        header.scrolled {
+            background: rgba(10, 10, 32, 0.95);
+            padding: 0.7rem 0;
+        }
+        
+        .header-container { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            width: 100%;
+        }
+        
+        .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-decoration: none; 
+        }
+        
+        .logo:hover {
+            transform: rotate(-5deg) scale(1.05);
+        }
+        
+        .logo h1 { 
+            font-family: 'Monoton', cursive; 
+            font-size: 1.9rem; 
+            font-weight: 400;
+            background: linear-gradient(45deg, var(--accent-magenta), var(--accent-yellow), var(--accent-blue));
+            -webkit-background-clip: text; 
+            background-clip: text; 
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px; 
+            white-space: nowrap; /* Evita que el texto se divida en dos líneas */
+        }
+        
+        .logo i { 
+            font-size: 2.2rem; 
+            color: var(--accent-green); 
+            animation: logoPulse 3s infinite alternate;
+        }
+        
+        @keyframes logoPulse { 
+            0% { transform: scale(1); color: var(--accent-green); }
+            50% { transform: scale(1.1); color: var(--secondary-cyan); } 
+            100% { transform: scale(1); color: var(--accent-blue); }
+        }
+        
+        nav ul { 
+            display: flex; 
+            list-style: none; 
+            gap: 15px;
+            align-items: center;
+        }
+        
+        nav a { 
+            color: var(--text-color-light); 
+            text-decoration: none; 
+            font-family: 'Comfortaa', sans-serif; 
+            font-size: 0.9rem; 
+            padding: 10px 15px; 
+            border-radius: 20px; 
+            transition: all 0.3s ease-out; 
+            position: relative;
+            background: transparent; 
+            border: 1px solid transparent;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 45px;
+        }
+        
+        nav a::before { 
+            content: ''; 
+            position: absolute; 
+            top: 50%; 
+            left: 0; 
+            width: 0%; 
+            height: 100%;
+            transform: translateY(-50%);
+            background: linear-gradient(90deg, transparent, var(--accent-magenta), var(--accent-blue), transparent);
+            opacity: 0.3; 
+            transition: width 0.4s ease; 
+            z-index: -1;
+            border-radius: 20px; 
+        }
+        
+        nav a:hover::before, 
+        nav a.active::before { 
+            width: 100%; 
+        } 
+        
+        nav a:hover, 
+        nav a.active {
+            color: var(--accent-yellow); 
+            background-color: rgba(0, 255, 255, 0.1); 
+            border: 1px solid var(--accent-blue); 
+            transform: translateY(-3px); 
+        }
+
+        .main-page-content { 
+            padding: 100px 0 4rem 0; 
+            flex-grow: 1; 
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem; 
+            padding-top: 2rem; 
+        }
+
+        .page-header h2 {
+            font-family: 'Playfair Display', serif; 
+            font-size: 3rem; 
+            font-weight: 700; 
+            color: var(--secondary-cyan); 
+            margin-bottom: 0.5rem;
+            text-transform: none; 
+            letter-spacing: 0.5px; 
+            display: inline-flex; 
+            align-items: center;
+            gap: 15px; 
+            white-space: nowrap;
+        }
+
+        .page-header h2 i {
+            font-size: 2.6rem; 
+            animation: subtleRotate 8s infinite linear;
+        }
+
+        @keyframes subtleRotate {
+            0% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(5deg) scale(1.05); }
+            50% { transform: rotate(0deg) scale(1.1); }
+            75% { transform: rotate(-5deg) scale(1.05); }
+            100% { transform: rotate(0deg) scale(1); }
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--text-color-medium);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem; 
+        }
+
+        .course-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border-color);
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.5); 
+        }
+
+        .course-thumbnail {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: opacity 0.3s ease, transform 0.4s ease; 
+        }
+         .course-card:hover .course-thumbnail {
+            opacity: 0.85;
+            transform: scale(1.03); 
+        }
+
+
+        .course-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--accent-yellow);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+            transition: color 0.3s ease, text-shadow 0.3s ease; 
+        }
+        .course-content h3:hover {
+            color: var(--secondary-cyan);
+            text-shadow: 0 0 8px var(--secondary-cyan);
+            font-family: 'Krona One', sans-serif;
+        }
+        
+        .course-meta {
+            font-size: 0.85rem;
+            color: var(--text-color-medium);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap; 
+        }
+
+        .course-meta i {
+            margin-right: 5px;
+            color: var(--accent-green);
+            transition: transform 0.3s ease; 
+        }
+        .course-meta span:hover i { 
+            transform: scale(1.2) rotate(-10deg);
+        }
+
+        .course-description {
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem; 
+            flex-grow: 1;
+            color: var(--text-color-light);
+        }
+
+        .enroll-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-magenta));
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; 
+            text-align: center;
+            align-self: flex-start; 
+        }
+
+        .enroll-btn:hover {
+            background: linear-gradient(45deg, var(--accent-magenta), var(--accent-blue));
+            transform: scale(1.05) translateY(-2px); 
+            box-shadow: 0 4px 15px rgba(255, 0, 255, 0.4); 
+        }
+        
+        footer { 
+            background: rgba(10,10,32,0.97); 
+            color: white; 
+            padding: 4rem 0 2rem; 
+            position: relative; 
+            border-top: 2px solid var(--accent-blue); 
+            margin-top: auto; 
+        }
+        
+        .footer-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+            gap: 40px; 
+            margin-bottom: 3rem; 
+        }
+        
+        .footer-column h3 { 
+            color: var(--accent-yellow); 
+            margin-bottom: 1.5rem; 
+            position: relative; 
+            padding-bottom: 10px; 
+            font-size: 1.4rem; 
+            font-family: 'Fredoka One', cursive;
+        }
+        
+        .footer-column h3::after { 
+            content: ''; 
+            position: absolute; 
+            bottom: 0; 
+            left: 0; 
+            width: 50px; 
+            height: 3.5px; 
+            background: var(--accent-blue); 
+            border-radius: 1.5px; 
+        }
+        
+        .footer-links { list-style: none; padding-left:0; } 
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { 
+            color: var(--text-color-medium); 
+            text-decoration: none; 
+            transition: all 0.3s ease; 
+            display: inline-block; 
+            padding: 4px 0; 
+            font-weight: 300; 
+        }
+        .footer-links a:hover { color: var(--accent-blue); transform: translateX(8px); }
+        
+        .contact-info { margin-top: 20px; }
+        .contact-info p { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            margin-bottom: 12px; 
+            font-size: 1.05rem; 
+            color: var(--text-color-medium); 
+        }
+        .contact-info i { color: var(--accent-blue); } 
+        
+        .copyright { 
+            text-align: center; 
+            padding-top: 2rem; 
+            border-top: 1px solid rgba(255, 255, 255, 0.07); 
+            color: #a090b0; 
+            font-size: 0.95rem; 
+        }
+        .copyright a { color: var(--accent-yellow); text-decoration: none; transition: all 0.3s ease; } 
+        .copyright a:hover { color: var(--text-color-light); }
+        
+        @media (max-width: 900px) {
+            .header-container { flex-direction: column; gap: 12px; }
+            nav ul { flex-wrap: wrap; justify-content: center; gap: 7px; }
+            nav a { font-size: 0.8rem; padding: 7px 10px; height: 40px; }
+            .page-header h2 { font-size: 2.6rem; } 
+            .page-header h2 i { font-size: 2.2rem; } 
+            .course-content h3 {font-size: 1.4rem;} 
+        }
+        
+        @media (max-width: 600px) {
+            .main-page-content { padding-top: 130px; } 
+            .logo h1 { font-size: 1.6rem; } 
+            nav ul { gap: 5px; }
+            nav a { font-size: 0.7rem; padding: 6px 7px; height: 35px; }
+            .page-header h2 { font-size: 2rem; } 
+            .page-header h2 i { font-size: 1.8rem; } 
+            .page-header p { font-size: 1rem; }
+            .course-grid { grid-template-columns: 1fr; }
+            .course-thumbnail { height: 180px; }
+            .course-content h3 {font-size: 1.3rem;} 
+            .course-description {font-size: 0.9rem;}
+            .enroll-btn { padding: 8px 16px; font-size: 0.9rem;}
+        }
+    </style>
+</head>
+<body>
+    <header id="main-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo"> 
+                <i class="fas fa-brain"></i>
+                <h1>UNIVERSO BORDERLINE</h1> 
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="cursos.html" class="active" aria-current="page">Cursos</a></li> 
+                    <li><a href="blog.html">Blog</a></li> 
+                    <li><a href="foro.html">Foros</a></li> 
+                    <li><a href="memes.html">Memes</a></li> 
+                    <li><a href="podcast.html">Podcast</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-page-content">
+        <div class="container">
+            <div class="page-header">
+                <h2><i class="fas fa-graduation-cap"></i> Cursos Disponibles</h2>
+                <p>
+                    Explora nuestras formaciones especializadas en DBT y CBT, diseñadas para brindar herramientas prácticas en manejo emocional y desarrollo mental.
+                </p>
+            </div>
+
+            <div class="course-grid">
+                <!-- Card para curso DBT -->
+                <article class="course-card"> 
+                    <img src="https://placehold.co/600x400/8A2BE2/FFFFFF?text=Curso+DBT" alt="Imagen representativa del curso DBT" class="course-thumbnail" onerror="this.onerror=null;this.src='https://placehold.co/600x400/0A0A20/FFFFFF?text=Imagen+No+Disponible';">
+                    <div class="course-content">
+                        <h3>Introducción a la DBT</h3>
+                        <div class="course-meta">
+                            <span><i class="fas fa-calendar-alt"></i> Inicio: 15 de Julio, 2025</span>
+                            <span><i class="fas fa-user-edit"></i> Instructora: Lic. Paula Gómez</span>
+                        </div>
+                        <p class="course-description">
+                            Domina las habilidades fundamentales de la Terapia Dialéctico Conductual, incluyendo mindfulness, regulación emocional y efectividad interpersonal. 
+                        </p>
+                        <a href="dbt.html" class="enroll-btn">Más Información <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- Card para curso CBT -->
+                <article class="course-card"> 
+                    <img src="https://placehold.co/600x400/00CED1/0A0A20?text=Curso+CBT" alt="Imagen representativa del curso CBT" class="course-thumbnail" onerror="this.onerror=null;this.src='https://placehold.co/600x400/0A0A20/FFFFFF?text=Imagen+No+Disponible';">
+                    <div class="course-content">
+                        <h3>Fundamentos de la CBT</h3>
+                        <div class="course-meta">
+                            <span><i class="fas fa-calendar-alt"></i> Inicio: 22 de Julio, 2025</span>
+                            <span><i class="fas fa-user-edit"></i> Instructor: Dr. Alejandro Ruiz</span>
+                        </div>
+                        <p class="course-description">
+                            Aprende las bases de la Terapia Cognitivo Conductual para identificar y reestructurar pensamientos disfuncionales, mejorando tu bienestar emocional.
+                        </p>
+                        <a href="cbt.html" class="enroll-btn">Más Información <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Universo Borderline</h3> 
+                    <p>Un enfoque creativo y visual para comprender y manejar el Trastorno Límite de la Personalidad, con un foco en DBT y CBT.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contacto</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> <a href="mailto:itfrombit.w74@gmail.com" style="color: var(--text-color-medium); text-decoration: none;">itfrombit.w74@gmail.com</a></p> 
+                        <p><i class="fas fa-user-tie"></i> Directora: Mayra Schwarzschild</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Comunidad Global</p>
+                        <p><i class="fab fa-discord"></i> <a href="https://discord.gg/92cYjcwZ" target="_blank" rel="noopener noreferrer" style="color: var(--text-color-medium); text-decoration: none;">Únete a Discord</a></p> 
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023-<span id="currentYear"></span> Universo Borderline. Todos los derechos reservados. Un viaje hacia la comprensión emocional y la DBT/CBT.</p> 
+                <p><a href="privacidad.html">Privacidad</a> | <a href="terminos.html">Términos</a> | <a href="seguridad.html">Seguridad</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current year in footer
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Active navigation link highlighting
+            const currentPageFilename = window.location.pathname.split('/').pop() || 'index.html'; 
+            const navLinks = document.querySelectorAll('header nav a');
+            navLinks.forEach(link => {
+                link.classList.remove('active'); 
+                link.removeAttribute('aria-current');
+                const linkFilename = link.getAttribute('href').split('/').pop().split('#')[0];
+                if (linkFilename === currentPageFilename) {
+                    link.classList.add('active');
+                    link.setAttribute('aria-current', 'page');
+                }
+            });
+            
+            // Header scroll effect
+            const header = document.getElementById('main-header');
+            if(header){
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 40) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
