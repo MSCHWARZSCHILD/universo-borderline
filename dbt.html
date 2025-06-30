@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terapia Dialéctico Conductual (DBT) - Universo Borderline</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Fredoka+One&family=Krona+One&family=Lobster&family=Major+Mono+Display&family=Monoton&family=Press+Start+2P&family=Caveat:wght@700&family=Sacramento&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-violet: #8A2BE2;
+            --secondary-cyan: #00CED1;
+            --accent-magenta: #FF00FF;
+            --accent-green: #00FF7F;
+            --accent-blue: #1E90FF;
+            --accent-yellow: #FFD700;
+            --accent-red: #FF4500;
+            
+            --text-color-light: #F0F0F0;
+            --text-color-medium: #A0A0A0;
+            
+            --card-bg: rgba(30, 30, 50, 0.92);
+            --border-color: rgba(138, 43, 226, 0.7);
+            --dark-bg: #0A0A20;
+
+            --primary-violet-rgb: 138, 43, 226;
+            --accent-blue-rgb: 30, 144, 255;
+            --accent-magenta-rgb: 255, 0, 255;
+            --accent-yellow-rgb: 255, 215, 0;
+            --accent-green-rgb: 0, 255, 127;
+            --secondary-cyan-rgb: 0, 206, 209;
+            --accent-red-rgb: 255, 69, 0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: var(--dark-bg);
+            color: var(--text-color-light);
+            line-height: 1.8;
+            font-family: 'Raleway', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex; 
+            flex-direction: column; 
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(var(--primary-violet-rgb), 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, rgba(var(--accent-blue-rgb), 0.1) 0%, transparent 30%),
+                radial-gradient(circle at 10% 80%, rgba(var(--accent-magenta-rgb), 0.1) 0%, transparent 25%);
+            background-size: 400% 400%; 
+            animation: gradientBackground 20s ease infinite;
+        }
+        
+        @keyframes gradientBackground {
+            0% { background-position: 0% 50%; } 
+            50% { background-position: 100% 50%; } 
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            width: 100%; 
+            max-width: 1100px; 
+            margin: 0 auto; 
+            padding: 0 20px; 
+            position: relative; 
+            z-index: 1;
+        }
+        
+        header {
+            background: rgba(10, 10, 32, 0.85); 
+            backdrop-filter: blur(12px); 
+            color: white; 
+            padding: 1rem 0; 
+            position: fixed; 
+            top: 0; 
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 2px solid var(--accent-magenta); 
+            box-shadow: 0 0 15px rgba(var(--accent-magenta-rgb), 0.3);
+            transition: all 0.4s ease;
+        }
+        
+        header.scrolled {
+            background: rgba(10, 10, 32, 0.95);
+            padding: 0.7rem 0;
+        }
+        
+        .header-container { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        
+        .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-decoration: none; 
+        }
+        
+        .logo:hover {
+            transform: rotate(-5deg) scale(1.05);
+        }
+        
+        .logo h1 { 
+            font-family: 'Monoton', cursive; 
+            font-size: 1.9rem; 
+            font-weight: 400;
+            background: linear-gradient(45deg, var(--accent-magenta), var(--accent-yellow), var(--accent-blue));
+            -webkit-background-clip: text; 
+            background-clip: text; 
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+        
+        .logo i { 
+            font-size: 2.2rem; 
+            color: var(--accent-green); 
+            animation: logoPulse 3s infinite alternate;
+        }
+        
+        @keyframes logoPulse {
+            0% { transform: scale(1); color: var(--accent-green); }
+            50% { transform: scale(1.1); color: var(--secondary-cyan); }
+            100% { transform: scale(1); color: var(--accent-blue); }
+        }
+        
+        nav ul { 
+            display: flex; 
+            list-style: none; 
+            gap: 10px; 
+        }
+        
+        nav a { 
+            color: var(--text-color-light); 
+            text-decoration: none; 
+            font-family: 'Comfortaa', sans-serif; 
+            font-size: 0.9rem; 
+            padding: 10px 15px; 
+            border-radius: 20px; 
+            transition: all 0.3s ease-out; 
+            position: relative;
+            background: transparent; 
+            border: 1px solid transparent; 
+        }
+        
+        nav a::before { 
+            content: ''; 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 0%; 
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--accent-magenta), var(--accent-blue), transparent);
+            opacity: 0.3; 
+            transition: width 0.4s ease; 
+            z-index: -1;
+            border-radius: 20px;
+        }
+        
+        nav a:hover::before, 
+        nav a.active::before { 
+            width: 100%; 
+        } 
+        
+        nav a:hover, 
+        nav a.active {
+            color: var(--accent-yellow); 
+            background-color: rgba(0, 255, 255, 0.1); 
+            border: 1px solid var(--accent-blue); 
+            transform: translateY(-3px); 
+        }
+
+        .main-page-content { 
+            padding: 100px 0 4rem 0; 
+            flex-grow: 1; 
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem; 
+            padding-top: 2rem;
+        }
+
+        .page-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem; 
+            font-weight: 700;
+            color: var(--primary-violet); 
+            margin-bottom: 0.75rem; 
+            text-transform: none; 
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 12px rgba(var(--primary-violet-rgb),0.5); 
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .page-header h2 i {
+            font-size: 2.8rem; 
+            animation: subtleRotate 8s infinite linear; 
+        }
+        @keyframes subtleRotate { 
+            0% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(4deg) scale(1.03); }
+            50% { transform: rotate(0deg) scale(1.06); }
+            75% { transform: rotate(-4deg) scale(1.03); }
+            100% { transform: rotate(0deg) scale(1); }
+        }
+
+        .page-header p.subtitle {
+            font-size: 1.25rem; 
+            color: var(--text-color-medium);
+            max-width: 800px; 
+            margin: 0 auto 2.5rem auto; 
+            font-style: italic; 
+        }
+        
+        .intro-dbt-section {
+            background: rgba(var(--primary-violet-rgb), 0.08); 
+            padding: 30px; 
+            border-radius: 15px;
+            margin-bottom: 3.5rem; 
+            border: 1px solid rgba(var(--primary-violet-rgb),0.3); 
+            box-shadow: 0 4px 15px rgba(var(--primary-violet-rgb), 0.1); 
+        }
+        .intro-dbt-section p {
+            font-size: 1.1rem;
+            text-align: justify;
+            margin-bottom: 1.2rem; 
+            line-height: 1.9;
+        }
+         .intro-dbt-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        .dbt-modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 340px)); 
+            gap: 2.5rem;
+            margin-bottom: 3rem; 
+            justify-content: center; 
+        }
+
+        .module-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px; 
+            box-shadow: 0 7px 22px rgba(0,0,0,0.35);
+            transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease; 
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            opacity: 0; 
+            transform: translateY(30px); 
+        }
+        .module-card.visible { 
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .module-card:hover {
+            transform: translateY(-12px) scale(1.03); 
+            box-shadow: 0 15px 35px rgba(var(--primary-violet-rgb), 0.6); 
+        }
+        .module-card.mindfulness:hover { border-color: var(--secondary-cyan); }
+        .module-card.emotion-regulation:hover { border-color: var(--accent-green); }
+        .module-card.distress-tolerance:hover { border-color: var(--accent-red); }
+        .module-card.interpersonal-effectiveness:hover { border-color: var(--accent-blue); }
+
+
+        .module-card .icon-container {
+            font-size: 3.2rem; 
+            margin-bottom: 1.2rem; 
+            color: var(--accent-yellow);
+            transition: color 0.3s ease, transform 0.3s ease; 
+        }
+        .module-card:hover .icon-container {
+            transform: scale(1.1) rotate(-5deg); 
+        }
+
+        .module-card.mindfulness .icon-container { color: var(--secondary-cyan); }
+        .module-card.emotion-regulation .icon-container { color: var(--accent-green); }
+        .module-card.distress-tolerance .icon-container { color: var(--accent-red); }
+        .module-card.interpersonal-effectiveness .icon-container { color: var(--accent-blue); }
+
+
+        .module-card h3 {
+            font-family: 'Krona One', sans-serif;
+            font-size: 1.6rem;
+            color: var(--text-color-light);
+            margin-bottom: 1rem;
+            transition: color 0.3s ease, text-shadow 0.3s ease; 
+        }
+        .module-card.mindfulness h3 { color: var(--secondary-cyan); }
+        .module-card.emotion-regulation h3 { color: var(--accent-green); }
+        .module-card.distress-tolerance h3 { color: var(--accent-red); }
+        .module-card.interpersonal-effectiveness h3 { color: var(--accent-blue); }
+        .module-card:hover h3 {
+            text-shadow: 0 0 8px currentColor; 
+        }
+
+
+        .module-card p.description {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-color-medium);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+        
+        .explore-module-btn {
+            display: inline-block;
+            color: white; 
+            padding: 12px 25px; 
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            font-family: 'Comfortaa', sans-serif;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: auto; 
+            border: 2px solid transparent; 
+        }
+
+        .explore-module-btn:hover {
+            transform: scale(1.05) translateY(-2px); 
+        }
+        .module-card.mindfulness .explore-module-btn { background: linear-gradient(45deg, var(--secondary-cyan), var(--primary-violet)); box-shadow: 0 4px 12px rgba(var(--secondary-cyan-rgb),0.4);}
+        .module-card.mindfulness .explore-module-btn:hover { background: linear-gradient(45deg, var(--primary-violet), var(--secondary-cyan)); border-color: var(--secondary-cyan);}
+
+        .module-card.emotion-regulation .explore-module-btn { background: linear-gradient(45deg, var(--accent-green), var(--secondary-cyan)); color:var(--dark-bg); box-shadow: 0 4px 12px rgba(var(--accent-green-rgb),0.4);}
+        .module-card.emotion-regulation .explore-module-btn:hover { background: linear-gradient(45deg, var(--secondary-cyan), var(--accent-green)); border-color: var(--accent-green);}
+        
+        .module-card.distress-tolerance .explore-module-btn { background: linear-gradient(45deg, var(--accent-red), var(--accent-yellow)); color:var(--dark-bg); box-shadow: 0 4px 12px rgba(var(--accent-red-rgb),0.4);}
+        .module-card.distress-tolerance .explore-module-btn:hover { background: linear-gradient(45deg, var(--accent-yellow), var(--accent-red)); border-color: var(--accent-red);}
+
+        .module-card.interpersonal-effectiveness .explore-module-btn { background: linear-gradient(45deg, var(--accent-blue), var(--accent-green)); color:var(--dark-bg); box-shadow: 0 4px 12px rgba(var(--accent-blue-rgb),0.4);}
+        .module-card.interpersonal-effectiveness .explore-module-btn:hover { background: linear-gradient(45deg, var(--accent-green), var(--accent-blue)); border-color: var(--accent-blue);}
+
+        .back-to-link-container {
+            text-align: center;
+            margin-top: 3rem; 
+            margin-bottom: 1rem; 
+        }
+        .back-to-btn {
+            display: inline-flex; 
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(45deg, var(--accent-yellow), var(--accent-red)); 
+            color: var(--dark-bg); 
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            font-family: 'Comfortaa', sans-serif;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 3px 10px rgba(var(--accent-yellow-rgb), 0.3);
+        }
+        .back-to-btn:hover {
+            background: linear-gradient(45deg, var(--accent-red), var(--accent-yellow)); 
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 5px 15px rgba(var(--accent-red-rgb), 0.4); 
+        }
+        .back-to-btn i {
+            font-size: 1em; 
+        }
+
+        footer { 
+            background: rgba(10,10,32,0.97); 
+            color: white; 
+            padding: 4rem 0 2rem; 
+            position: relative; 
+            border-top: 2px solid var(--accent-blue); 
+            margin-top: auto; 
+        }
+        
+        .footer-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+            gap: 40px; 
+            margin-bottom: 3rem; 
+        }
+        
+        .footer-column h3 { 
+            color: var(--accent-yellow); 
+            margin-bottom: 1.5rem; 
+            position: relative; 
+            padding-bottom: 10px; 
+            font-size: 1.4rem; 
+            font-family: 'Fredoka One', cursive;
+        }
+        
+        .footer-column h3::after { 
+            content: ''; 
+            position: absolute; 
+            bottom: 0; 
+            left: 0; 
+            width: 50px; 
+            height: 3.5px; 
+            background: var(--accent-blue); 
+            border-radius: 1.5px; 
+        }
+        
+        .footer-links { list-style: none; padding-left:0; } 
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { 
+            color: var(--text-color-medium); 
+            text-decoration: none; 
+            transition: all 0.3s ease; 
+            display: inline-block; 
+            padding: 4px 0; 
+            font-family: 'Comfortaa', sans-serif; 
+        }
+        .footer-links a:hover { color: var(--accent-blue); transform: translateX(8px); }
+        
+        .contact-info { margin-top: 20px; }
+        .contact-info p { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            margin-bottom: 12px; 
+            font-size: 1.05rem; 
+            color: var(--text-color-medium); 
+            font-family: 'Comfortaa', sans-serif; 
+        }
+        .contact-info i { color: var(--accent-blue); flex-shrink: 0; } 
+        
+        .copyright { 
+            text-align: center; 
+            padding-top: 2rem; 
+            border-top: 1px solid rgba(255, 255, 255, 0.07); 
+            color: #a090b0; 
+            font-size: 0.95rem; 
+            font-family: 'Comfortaa', sans-serif; 
+        }
+        .copyright a { color: var(--accent-yellow); text-decoration: none; transition: all 0.3s ease; } 
+        .copyright a:hover { color: var(--text-color-light); }
+        
+        /* Background Effects */
+        .stars {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            pointer-events: none; z-index: -2; 
+        }
+        .star {
+            position: absolute; width: 2px; height: 2px; background: white;
+            border-radius: 50%; opacity: 0; animation: twinkle 5s infinite;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+            100% { opacity: 0; transform: scale(1); }
+        }
+        .galaxy {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: radial-gradient(circle at center, transparent 20%, rgba(var(--primary-violet-rgb), 0.1) 70%, transparent 100%);
+            z-index: -1; opacity: 0.3; animation: rotateGalaxy 120s infinite linear;
+        }
+        @keyframes rotateGalaxy {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 900px) {
+            .header-container { flex-direction: column; gap: 12px; }
+            nav ul { flex-wrap: wrap; justify-content: center; gap: 7px; }
+            nav a { font-size: 0.8rem; padding: 7px 10px; }
+            .page-header h2 { font-size: 2.4rem; } 
+            .module-card h3 {font-size: 1.4rem;}
+        }
+        
+        @media (max-width: 600px) {
+            .main-page-content { padding-top: 130px; } 
+            .logo h1 { font-size: 1.6rem; }
+            nav ul { gap: 5px; }
+            nav a { font-size: 0.7rem; padding: 6px 7px; }
+            .page-header h2 { font-size: 2rem; } 
+            .page-header p.subtitle { font-size: 1rem; }
+            .dbt-modules-grid { grid-template-columns: 1fr; }
+            .module-card { padding: 20px; }
+            .module-card .icon-container { font-size: 2.5rem; }
+            .module-card h3 {font-size: 1.3rem;}
+            .module-card p.description {font-size: 0.9rem;}
+            .explore-module-btn { padding: 10px 20px; font-size: 0.9rem;} 
+            .back-to-btn { padding: 10px 20px; font-size: 0.9rem;}
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <div class="galaxy"></div>
+    
+    <header id="main-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo" aria-label="Universo Borderline Homepage"> 
+                <i class="fas fa-brain" aria-hidden="true"></i>
+                <h1>UNIVERSO BORDERLINE</h1> 
+            </a>
+            <nav aria-label="Navegación principal">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="cursos.html" class="active" aria-current="page">Cursos</a></li> 
+                    <li><a href="blog.html">Blog</a></li> 
+                    <li><a href="foro.html">Foros</a></li> 
+                    <li><a href="memes.html">Memes</a></li> 
+                    <li><a href="podcast.html">Podcast</a></li> 
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-page-content">
+        <div class="container">
+            <div class="page-header">
+                <h2><i class="fas fa-yin-yang"></i> Terapia Dialéctico Conductual (DBT)</h2>
+                <p class="subtitle">
+                    Un enfoque integral para cultivar el equilibrio, la resiliencia emocional y relaciones interpersonales más saludables.
+                </p>
+            </div>
+
+            <section class="intro-dbt-section">
+                <p>La <strong>Terapia Dialéctico Conductual (DBT)</strong>, desarrollada por <em>Marsha M. Linehan</em>, es un tratamiento complejo y basado en la evidencia, diseñado originalmente para individuos con Trastorno Límite de la Personalidad (TLP), especialmente aquellos con conductas suicidas crónicas y desregulación emocional severa. Sin embargo, su eficacia se ha demostrado en una variedad de otros trastornos y problemas, incluyendo abuso de sustancias, trastornos alimentarios y TEPT.</p>
+                <p>El núcleo filosófico de la DBT es la <strong>"dialéctica"</strong> – la síntesis o integración de opuestos. En DBT, la dialéctica central es entre la <em>aceptación</em> y el <em>cambio</em>. Esto significa que la terapia ayuda a los individuos a aceptarse a sí mismos, su historia y sus emociones tal como son en el momento presente, y al mismo tiempo, les enseña habilidades y estrategias para cambiar comportamientos, pensamientos y emociones disfuncionales para construir una vida que valga la pena ser vivida.</p>
+                <p>La DBT se estructura en torno a cuatro conjuntos principales de habilidades (o módulos) que se aprenden y practican sistemáticamente para mejorar la capacidad de una persona para manejar emociones intensas, tolerar el malestar sin empeorar la situación, ser consciente y estar presente en el momento, y navegar las relaciones interpersonales de manera más efectiva y satisfactoria.</p>
+            </section>
+
+            <div class="dbt-modules-grid">
+                <article class="module-card mindfulness">
+                    <div class="icon-container">
+                        <i class="fas fa-spa"></i>
+                    </div>
+                    <h3>Mindfulness (Atención Plena)</h3>
+                    <p class="description">
+                        Aprende a observar tus pensamientos, emociones y sensaciones sin juzgar, anclándote en el momento presente. Estas habilidades son fundamentales para reducir la reactividad y aumentar la autoconciencia, formando la base de toda la DBT.
+                    </p>
+                    <a href="mindfulness_dbt.html" class="explore-module-btn">Explorar Mindfulness <i class="fas fa-arrow-right"></i></a>
+                </article>
+
+                <article class="module-card emotion-regulation">
+                    <div class="icon-container">
+                        <i class="fas fa-heart-pulse"></i> 
+                    </div>
+                    <h3>Regulación Emocional</h3>
+                    <p class="description">
+                        Identifica y comprende tus emociones, reduce la vulnerabilidad a la "mente emocional" y aprende estrategias para cambiar las emociones no deseadas de manera efectiva, fomentando un mayor equilibrio y experiencias positivas.
+                    </p>
+                    <a href="regulacion_emocional_dbt.html" class="explore-module-btn">Explorar Regulación Emocional <i class="fas fa-arrow-right"></i></a>
+                </article>
+
+                <article class="module-card distress-tolerance">
+                     <div class="icon-container">
+                        <i class="fas fa-mountain"></i> 
+                    </div>
+                    <h3>Tolerancia al Malestar</h3>
+                    <p class="description">
+                        Desarrolla la capacidad de aceptar y sobrevivir a momentos de crisis y emociones intensas sin recurrir a conductas impulsivas o dañinas, aprendiendo a gestionar el dolor inevitable de la vida con resiliencia.
+                    </p>
+                    <a href="tolerancia_malestar_dbt.html" class="explore-module-btn">Explorar Tolerancia al Malestar <i class="fas fa-arrow-right"></i></a>
+                </article>
+
+                <article class="module-card interpersonal-effectiveness">
+                    <div class="icon-container">
+                        <i class="fas fa-users-cog"></i> 
+                    </div>
+                    <h3>Efectividad Interpersonal</h3>
+                    <p class="description">
+                        Aprende a pedir lo que necesitas, decir no de forma asertiva, y mantener relaciones saludables y el autorespeto, equilibrando tus objetivos con las necesidades de los demás de manera habilidosa.
+                    </p>
+                    <a href="efectividad_interpersonal_dbt.html" class="explore-module-btn">Explorar Efectividad Interpersonal <i class="fas fa-arrow-right"></i></a>
+                </article>
+            </div>
+            
+            <div class="back-to-link-container">
+                <a href="cursos.html" class="back-to-btn"><i class="fas fa-arrow-left"></i> Volver a Cursos</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Universo Borderline</h3>
+                    <p style="font-family: 'Comfortaa', sans-serif;">Un enfoque creativo y visual para comprender y manejar el Trastorno Límite de la Personalidad, con un foco en DBT.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Enlaces Útiles</h3> 
+                    <ul class="footer-links">
+                        <li><a href="https://es.wikipedia.org/wiki/Terapia_dial%C3%A9ctico-conductual" target="_blank" rel="noopener noreferrer">¿Qué es DBT?</a></li> 
+                        <li><a href="https://es.wikipedia.org/wiki/Mindfulness" target="_blank" rel="noopener noreferrer">Mindfulness</a></li> 
+                        <li><a href="https://www.nimh.nih.gov/health/topics/borderline-personality-disorder" target="_blank" rel="noopener noreferrer">Info sobre TLP (NIMH)</a></li> 
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contacto</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope" aria-hidden="true"></i> <a href="mailto:itfrombit.w74@gmail.com" style="color: var(--text-color-medium); text-decoration:none;">itfrombit.w74@gmail.com</a></p> 
+                        <p><i class="fas fa-user-tie" aria-hidden="true"></i> Directora: Mayra Schwarzschild</p>
+                        <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Comunidad Global</p>
+                        <p><i class="fab fa-discord" aria-hidden="true"></i> <a href="https://discord.gg/92cYjcwZ" target="_blank" rel="noopener noreferrer" style="color: var(--text-color-medium); text-decoration:none;">Únete a Discord</a></p> 
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2023- <span id="currentYear"></span> Universo Borderline. Todos los derechos reservados. Un viaje hacia la comprensión emocional y la DBT.</p> 
+                <p><a href="privacidad.html">Privacidad</a> | <a href="terminos.html">Términos</a> | <a href="seguridad.html">Seguridad</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current year in footer
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Create animated stars
+            const starsContainer = document.getElementById('stars');
+            if (starsContainer) {
+                const starsCount = 150; // Number of stars
+                for (let i = 0; i < starsCount; i++) {
+                    const star = document.createElement('div');
+                    star.classList.add('star');
+                    const size = Math.random() * 2.2 + 0.3; // Random size
+                    star.style.width = `${size}px`;
+                    star.style.height = `${size}px`;
+                    star.style.left = `${Math.random() * 100}%`; // Random horizontal position
+                    star.style.top = `${Math.random() * 100}%`; // Random vertical position
+                    star.style.animationDelay = `${Math.random() * 6}s`; // Random animation delay
+                    star.style.animationDuration = `${2.5 + Math.random() * 6.5}s`; // Random animation duration
+                    if (Math.random() > 0.65) {
+                        const colors = ['var(--primary-violet)', 'var(--secondary-cyan)', 'var(--accent-magenta)', 'var(--accent-green)'];
+                        star.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                        star.style.boxShadow = `0 0 ${Math.random() * 2.5 + 0.5}px ${star.style.backgroundColor}`;
+                    } else {
+                        star.style.boxShadow = `0 0 ${Math.random() * 1.5 + 0.3}px rgba(255,255,255,0.6)`;
+                    }
+                    starsContainer.appendChild(star);
+                }
+            }
+            
+            // Active navigation link highlighting
+            const currentPageFilename = window.location.pathname.split('/').pop() || 'index.html'; 
+            const navLinks = document.querySelectorAll('header nav a');
+            navLinks.forEach(link => {
+                link.classList.remove('active'); 
+                link.removeAttribute('aria-current');
+                const linkFilename = link.getAttribute('href').split('/').pop().split('#')[0];
+                
+                // Highlight "Cursos" if on any course-related subpage or cursos.html itself
+                if (linkFilename === 'cursos.html' && 
+                    (currentPageFilename === 'cursos.html' || 
+                     currentPageFilename === 'dbt.html' || 
+                     currentPageFilename === 'cbt.html' ||
+                     currentPageFilename.includes('_dbt') ||
+                     currentPageFilename.includes('_cbt') 
+                    )) {
+                    link.classList.add('active'); 
+                    link.setAttribute('aria-current', 'page');
+                } else if (linkFilename === currentPageFilename) { // For other pages
+                    link.classList.add('active');
+                    link.setAttribute('aria-current', 'page');
+                }
+            });
+            
+            // Header scroll effect
+            const header = document.getElementById('main-header');
+            if(header){
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 40) { 
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                });
+            }
+            
+            // Intersection Observer for module card animations
+            const animatedModules = document.querySelectorAll('.module-card, .intro-dbt-section'); 
+            if (animatedModules.length > 0) {
+                 const observerOptions = {
+                    root: null, 
+                    rootMargin: '0px',
+                    threshold: 0.1 
+                };
+                const observer = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible'); 
+                        }
+                    });
+                }, observerOptions);
+
+                animatedModules.forEach(module => {
+                    observer.observe(module);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
