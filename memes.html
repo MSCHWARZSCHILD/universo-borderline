@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memes de Salud Mental - Galería Dinámica y Divertida</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Original Meme Page Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Oswald:wght@400;500;700&family=Fredoka+One&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <!-- Added fonts from other pages for consistency in nav/logo -->
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Krona+One&family=Lobster&family=Major+Mono+Display&family=Monoton&family=Press+Start+2P&family=Sacramento&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-violet: #8A2BE2;
+            --secondary-cyan: #00CED1;
+            --accent-magenta: #FF00FF;
+            --accent-green: #00FF7F;
+            --accent-blue: #1E90FF;
+            --accent-yellow: #FFD700;
+            --accent-red: #FF4500;
+            
+            --text-color-light: #F0F0F0;
+            --text-color-medium: #A0A0A0;
+            
+            --card-bg: rgba(30, 30, 50, 0.92); /* Standard card bg */
+            --border-color: rgba(138, 43, 226, 0.7); /* Standard border */
+            --dark-bg: #0A0A20; /* Standard dark bg */
+
+            --primary-violet-rgb: 138, 43, 226;
+            --accent-blue-rgb: 30, 144, 255;
+            --accent-magenta-rgb: 255, 0, 255;
+            --accent-yellow-rgb: 255, 215, 0;
+            --accent-green-rgb: 0, 255, 127;
+            --secondary-cyan-rgb: 0, 206, 209;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif; /* Main font for meme page content */
+            background-color: #111827; /* bg-gray-900 from meme page */
+            color: #F3F4F6; /* text-gray-100 from meme page */
+            min-height: 100vh;
+            display: flex; 
+            flex-direction: column; 
+        }
+
+        .meme-card {
+            background-color: #1F2937; /* bg-gray-800 */
+            border-radius: 0.75rem; /* rounded-xl */
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, opacity 0.5s ease-out;
+            opacity: 0; /* Tarjetas invisibles por defecto */
+            transform: translateY(20px);
+            display: flex;
+            flex-direction: column;
+            min-height: 180px; /* Ensure a minimum height for cards without images */
+        }
+        .meme-card.is-visible {
+            opacity: 1; /* Hacemos visibles las tarjetas */
+            transform: translateY(0);
+        }
+        .meme-card:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 25px 50px -12px rgba(79, 70, 229, 0.5);
+        }
+        /* img styles are removed as images are removed from cards */
+        .meme-card h3 {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 500;
+        }
+        .meme-card-content {
+            padding: 1.25rem; /* p-5 */
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .meme-card-buttons {
+            margin-top: auto; /* Pushes buttons to the bottom */
+            padding-top: 0.75rem; /* pt-3 */
+        }
+
+        .platform-title {
+            background: linear-gradient(90deg, #4F46E5, #EC4899, #10B981, #4F46E5);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 300% 100%;
+            animation: gradientFlow 8s linear infinite;
+        }
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+
+        /* Standard Header Styles (adapted from other pages) */
+        .standard-header {
+            background: rgba(10, 10, 32, 0.85); 
+            backdrop-filter: blur(12px); 
+            color: white; 
+            padding: 1rem 0; 
+            position: fixed; 
+            top: 0; 
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 2px solid var(--accent-magenta); 
+            box-shadow: 0 0 15px rgba(var(--accent-magenta-rgb), 0.3);
+            transition: all 0.4s ease;
+        }
+        .standard-header.scrolled {
+            background: rgba(10, 10, 32, 0.95);
+            padding: 0.7rem 0;
+        }
+        .header-container { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-decoration: none; 
+        }
+        .logo:hover {
+            transform: rotate(-5deg) scale(1.05);
+        }
+        .logo h1.site-title { /* Specific class for site title to avoid conflict */
+            font-family: 'Monoton', cursive; 
+            font-size: 1.9rem; 
+            font-weight: 400;
+            background: linear-gradient(45deg, var(--accent-magenta), var(--accent-yellow), var(--accent-blue));
+            -webkit-background-clip: text; 
+            background-clip: text; 
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+        .logo i.site-icon { /* Specific class for site icon */
+            font-size: 2.2rem; 
+            color: var(--accent-green); 
+            animation: logoPulse 3s infinite alternate;
+        }
+        @keyframes logoPulse {
+            0% { transform: scale(1); color: var(--accent-green); }
+            50% { transform: scale(1.1); color: var(--secondary-cyan); } 
+            100% { transform: scale(1); color: var(--accent-blue); }
+        }
+        nav ul { 
+            display: flex; 
+            list-style: none; 
+            gap: 10px; 
+        }
+        nav a { 
+            color: var(--text-color-light); 
+            text-decoration: none; 
+            font-family: 'Comfortaa', sans-serif; 
+            font-size: 0.9rem; 
+            padding: 10px 15px; 
+            border-radius: 20px; 
+            transition: all 0.3s ease-out; 
+            position: relative;
+            background: transparent; 
+            border: 1px solid transparent; 
+        }
+        nav a::before { 
+            content: ''; 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 0%; 
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--accent-magenta), var(--accent-blue), transparent);
+            opacity: 0.3; 
+            transition: width 0.4s ease; 
+            z-index: -1;
+            border-radius: 20px; 
+        }
+        nav a:hover::before, 
+        nav a.active::before { 
+            width: 100%; 
+        } 
+        nav a:hover, 
+        nav a.active {
+            color: var(--accent-yellow); 
+            background-color: rgba(0, 255, 255, 0.1); 
+            border: 1px solid var(--accent-blue); 
+            transform: translateY(-3px); 
+        }
+        .main-page-content-wrapper { /* Wrapper for main content to handle fixed header */
+             padding-top: 80px; /* Adjust based on header height */
+        }
+        @media (max-width: 900px) {
+            .header-container { flex-direction: column; gap: 12px; }
+            nav ul { flex-wrap: wrap; justify-content: center; }
+            .main-page-content-wrapper { padding-top: 120px; } /* Adjust for taller header on mobile */
+        }
+           @media (max-width: 600px) {
+            .main-page-content-wrapper { padding-top: 150px; } /* Further adjust for mobile */
+        }
+
+        /* Footer Styles from Foros Page (for consistency if needed) */
+        .standard-footer { 
+            background: rgba(10,10,32,0.97); 
+            color: var(--text-color-light); /* Changed to use variable */
+            padding: 2rem 0; /* Adjusted padding */
+            position: relative; 
+            border-top: 2px solid var(--accent-blue); 
+            margin-top: auto; /* Pushes footer to bottom */
+            text-align: center; /* Ensures overall footer content is centered */
+        }
+        .footer-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Adjusted minmax */
+            gap: 30px; /* Adjusted gap */
+            margin-bottom: 2rem; /* Adjusted margin */
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 20px;
+            justify-items: center; /* Center grid items horizontally */
+        }
+        .footer-column h3 { 
+            color: var(--accent-yellow); 
+            margin-bottom: 1rem; /* Adjusted margin */
+            position: relative; 
+            padding-bottom: 8px; /* Adjusted padding */
+            font-size: 1.25rem; /* Adjusted font size */
+            font-family: 'Fredoka One', cursive;
+        }
+        .footer-column h3::after { 
+            content: ''; 
+            position: absolute; 
+            bottom: 0; 
+            left: 50%; /* Center the underline */
+            transform: translateX(-50%); /* Adjust for perfect centering */
+            width: 40px; /* Adjusted width */
+            height: 3px; /* Adjusted height */
+            background: var(--accent-blue); 
+            border-radius: 1.5px; 
+        }
+        .footer-links { list-style: none; padding-left:0; display: inline-block; /* Allows the ul to be centered */
+            margin: 0 auto; /* Centers the block itself */ } 
+        .footer-links li { 
+            margin-bottom: 10px; /* Adjusted margin */
+            text-align: center; /* Ensures individual list items are centered if they contain block-level elements */
+        }
+        .footer-links a { 
+            color: var(--text-color-medium); /* Reverted to original variable */
+            text-decoration: none; 
+            transition: all 0.3s ease; 
+            display: inline-block; 
+            padding: 3px 0; /* Adjusted padding */
+            font-family: 'Comfortaa', sans-serif; 
+            font-size: 0.9rem; /* Adjusted font size */
+        }
+        .footer-links a:hover { color: var(--accent-blue); transform: translateX(0px); } /* Reverted transform */
+        
+        .contact-info { 
+            margin-top: 15px; /* Adjusted margin */ 
+            text-align: center; /* Center contact info block */
+        }
+        .contact-info p { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; /* Center content of flex items (icons and text) */
+            gap: 8px; /* Adjusted gap */
+            margin-bottom: 10px; /* Adjusted margin */
+            font-size: 0.95rem; /* Adjusted font size */
+            color: var(--text-color-medium); /* Reverted to original variable */
+            font-family: 'Comfortaa', sans-serif; 
+        }
+        .contact-info i { color: var(--accent-blue); flex-shrink:0; } 
+        /* Specific override for contact-info links if needed, otherwise inherit */
+        .contact-info p a {
+            color: var(--text-color-medium); /* Use text-color-medium for consistency */
+        }
+        .contact-info p a:hover {
+            color: var(--accent-blue); /* Keep hover effect for contact links */
+        }
+        
+        .copyright { 
+            text-align: center; 
+            padding-top: 1.5rem; /* Adjusted padding */
+            border-top: 1px solid rgba(255, 255, 255, 0.07); 
+            color: #a090b0; /* Reverted to original color */
+            font-size: 0.9rem; 
+            font-family: 'Comfortaa', sans-serif; 
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .copyright a { color: var(--accent-yellow); text-decoration: none; transition: all 0.3s ease; } 
+        .copyright a:hover { color: var(--text-color-light); }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Standard Header from other pages -->
+    <header id="main-header" class="standard-header">
+        <div class="header-container">
+            <a href="index.html" class="logo" aria-label="Universo Borderline Homepage"> 
+                <i class="fas fa-brain site-icon" aria-hidden="true"></i>
+                <h1 class="site-title">UNIVERSO BORDERLINE</h1> 
+            </a>
+            <nav aria-label="Navegación principal">
+                <ul>
+                    <li><a href="inicio.html">Inicio</a></li>
+                    <li><a href="cursos.html">Cursos</a></li> 
+                    <li><a href="blog.html">Blog</a></li> 
+                    <li><a href="foro.html">Foros</a></li> 
+                    <li><a href="memes.html" class="active" aria-current="page">Memes</a></li> 
+                    <li><a href="podcast.html">Podcast</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="main-page-content-wrapper"> <!-- Wrapper for main content -->
+        
+        <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+            <!-- The main title section has been removed -->
+
+            <section id="reddit-memes" class="mb-12 md:mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-8 md:mb-10 text-center">
+                    Joyitas de <span class="platform-title">Reddit</span> <i class="fab fa-reddit-alien text-orange-500 ml-2"></i>
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+                    <!-- Meme 1 -->
+                    <div class="meme-card">
+                        <!-- Image removed -->
+                        <div class="meme-card-content">
+                            <h3 class="text-xl mb-2 text-indigo-300">Mi Cerebro y Yo en la Noche</h3>
+                            <p class="text-sm text-gray-400 mb-3">Fuente: r/MentalHealthMemes (Alternativo)</p>
+                            <div class="meme-card-buttons">
+                                <a href="https://www.reddit.com/r/MentalHealthMemes/" target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-150 ease-in-out text-sm">
+                                    Ver en Reddit <i class="fas fa-external-link-alt ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Meme 2 -->
+                    <div class="meme-card">
+                        <!-- Image removed -->
+                        <div class="meme-card-content">
+                            <h3 class="text-xl mb-2 text-emerald-300">Procrastinación Nivel Experto</h3>
+                            <p class="text-sm text-gray-400 mb-3">Fuente: r/FunnyAndSad (Alternativo)</p>
+                            <div class="meme-card-buttons">
+                                <a href="https://www.reddit.com/r/FunnyAndSad/" target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-150 ease-in-out text-sm">
+                                    Ver en Reddit <i class="fas fa-external-link-alt ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Meme 3 -->
+                    <div class="meme-card">
+                        <!-- Image removed -->
+                        <div class="meme-card-content">
+                            <h3 class="text-xl mb-2 text-amber-300">Pequeña Gran Victoria</h3>
+                            <p class="text-sm text-gray-400 mb-3">Fuente: r/WholesomeMemes (Alternativo)</p>
+                            <div class="meme-card-buttons">
+                                <a href="https://www.reddit.com/r/WholesomeMemes/" target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-150 ease-in-out text-sm">
+                                    Ver en Reddit <i class="fas fa-external-link-alt ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Meme 4 -->
+                    <div class="meme-card">
+                        <!-- Image removed -->
+                        <div class="meme-card-content">
+                            <h3 class="text-xl mb-2 text-pink-400">Batería Social Agotada</h3>
+                            <p class="text-sm text-gray-400 mb-3">Fuente: r/IntrovertMemes (Alternativo)</p>
+                            <div class="meme-card-buttons">
+                                <a href="https://www.reddit.com/r/IntrovertMemes/" target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-pink-600 hover:bg-pink-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-150 ease-in-out text-sm">
+                                    Ver en Reddit <i class="fas fa-external-link-alt ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección de Facebook eliminada -->
+
+            <section id="pinterest-memes" class="mb-12 md:mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-8 md:mb-10 text-center">
+                    Inspiración de <span class="platform-title">Pinterest</span> <i class="fab fa-pinterest text-red-600 ml-2"></i>
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+                    <div class="meme-card">
+                        <!-- Image removed -->
+                        <div class="meme-card-content">
+                            <h3 class="text-xl mb-2 text-red-400">Modo Zen Activado</h3>
+                            <p class="text-sm text-gray-400 mb-3">Fuente: Pinterest "Salud Mental y Bienestar"</p>
+                            <div class="meme-card-buttons">
+                                <a href="https://www.pinterest.com/search/pins/?q=mental%20health%20memes%20español" target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-red-600 hover:bg-red-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-150 ease-in-out text-sm">
+                                    Buscar en Pinterest <i class="fas fa-external-link-alt ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="meme-card">
+                        <!-- Image removed -->
+                        <div class="meme-card-content">
+                            <h3 class="text-xl mb-2 text-fuchsia-400">Recordatorio de Amor Propio</h3>
+                            <p class="text-sm text-gray-400 mb-3">Fuente: Pinterest "Self-Care Club"</p>
+                            <div class="meme-card-buttons">
+                                <a href="https://www.pinterest.com/search/pins/?q=self%20love%20memes%20español" target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-150 ease-in-out text-sm">
+                                    Buscar en Pinterest <i class="fas fa-external-link-alt ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="meme-card">
+                        <!-- Image removed -->
+                        <div class="meme-card-content">
+                            <h3 class="text-xl mb-2 text-lime-400">Un Día a la Vez</h3>
+                            <p class="text-sm text-gray-400 mb-3">Fuente: Pinterest "Mentalidad Positiva"</p>
+                            <div class="meme-card-buttons">
+                                <a href="https://www.pinterest.com/search/pins/?q=un%20dia%20a%20la%20vez%20meme" target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-lime-500 hover:bg-lime-600 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-150 ease-in-out text-sm">
+                                    Buscar en Pinterest <i class="fas fa-external-link-alt ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="meme-card">
+                        <!-- Image removed -->
+                        <div class="meme-card-content">
+                            <h3 class="text-xl mb-2 text-blue-400">Validando Emociones</h3>
+                            <p class="text-sm text-gray-400 mb-3">Fuente: Pinterest "Salud Emocional"</p>
+                            <div class="meme-card-buttons">
+                                <a href="https://www.pinterest.com/search/pins/?q=validar%20emociones%20meme" target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-150 ease-in-out text-sm">
+                                    Buscar en Pinterest <i class="fas fa-external-link-alt ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="instagram-memes" class="mb-12 md:mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-8 md:mb-10 text-center">
+                    Postales de <span class="platform-title">Instagram</span> <i class="fab fa-instagram text-pink-500 ml-2"></i>
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+                    <!-- Primera Tarjeta de Instagram REEMPLAZADA -->
+                    <div class="meme-card">
+                        <!-- Image removed -->
+                        <div class="meme-card-content">
+                            <h3 class="text-xl mb-2 text-teal-300">Desafío Diario: Respirar</h3>
+                            <p class="text-sm text-gray-400 mb-3">Fuente: @RespirayFluye (Nuevo Ejemplo)</p>
+                            <div class="meme-card-buttons">
+                                <a href="https://www.instagram.com/explore/tags/mindfulness/" target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-150 ease-in-out text-sm">
+                                    Explorar en Instagram <i class="fas fa-external-link-alt ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Meme 2 -->
+                    <div class="meme-card">
+                            <!-- Image removed -->
+                        <div class="meme-card-content">
+                            <h3 class="text-xl mb-2 text-orange-400">En Terapia Se Habla</h3>
+                            <p class="text-sm text-gray-400 mb-3">Fuente: @HablemosDeSaludMental (Ejemplo)</p>
+                            <div class="meme-card-buttons">
+                                <a href="https://www.instagram.com/explore/tags/therapymemes/" target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-150 ease-in-out text-sm">
+                                    Explorar en Instagram <i class="fas fa-external-link-alt ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Meme 3 -->
+                    <div class="meme-card">
+                        <!-- Image removed -->
+                        <div class="meme-card-content">
+                            <h3 class="text-xl mb-2 text-sky-400">Autocuidado Esencial</h3>
+                            <p class="text-sm text-gray-400 mb-3">Fuente: @CulturaPositiva (Ejemplo)</p>
+                            <div class="meme-card-buttons">
+                                <a href="https://www.instagram.com/explore/tags/selfcare/" target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-150 ease-in-out text-sm">
+                                    Explorar en Instagram <i class="fas fa-external-link-alt ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Meme 4 -->
+                    <div class="meme-card">
+                        <!-- Image removed -->
+                        <div class="meme-card-content">
+                            <h3 class="text-xl mb-2 text-violet-400">Emociones en Proceso</h3>
+                            <p class="text-sm text-gray-400 mb-3">Fuente: @AnsiedadYCafe (Ejemplo)</p>
+                            <div class="meme-card-buttons">
+                                <a href="https://www.instagram.com/explore/tags/emociones/" target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-violet-600 hover:bg-violet-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-150 ease-in-out text-sm">
+                                    Explorar en Instagram <i class="fas fa-external-link-alt ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="text-center py-10 md:py-16 bg-gray-800 rounded-xl shadow-2xl mt-12 border border-indigo-500/30">
+                <h3 class="text-2xl md:text-3xl font-semibold mb-4 text-indigo-300">¡Personaliza Tu Diversión!</h3>
+                <p class="text-gray-300 max-w-xl mx-auto mb-6">
+                    Esta galería es tu espacio. Para llenarla con tus memes favoritos:
+                </p>
+                <ol class="text-gray-400 list-decimal list-inside inline-block text-left space-y-3 mb-8 text-sm sm:text-base">
+                    <li>Encuentra la URL directa de un meme gracioso (que termine en .jpg, .png, .gif).</li>
+                    <li>En el código HTML, busca una tarjeta (<code class="bg-gray-700 px-1.5 py-0.5 rounded-md text-pink-400 text-xs">&lt;div class="meme-card"&gt;</code>).</li>
+                    <li>(Opcional) Si deseas añadir una imagen, descomenta o reinserta la etiqueta <code class="bg-gray-700 px-1.5 py-0.5 rounded-md text-pink-400 text-xs">&lt;img&gt;</code> y reemplaza el atributo <code class="bg-gray-700 px-1.5 py-0.5 rounded-md text-pink-400 text-xs">src</code> con la URL de tu imagen.</li>
+                    <li>Actualiza el título, la fuente y los enlaces con los de tu meme. ¡Guarda los cambios y disfruta!</li>
+                </ol>
+                <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-150 ease-in-out shadow-lg">
+                    ¡Manos a la Obra!
+                </a>
+            </section>
+
+        </main>
+    </div>
+
+    <footer class="standard-footer">
+        <div class="container mx-auto px-6">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Universo Borderline</h3>
+                    <p style="font-family: 'Comfortaa', sans-serif;">Un enfoque creativo y visual para comprender y manejar el Trastorno Límite de la Personalidad, con un foco en DBT.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Enlaces Útiles</h3> 
+                    <ul class="footer-links">
+                        <li><a href="https://es.wikipedia.org/wiki/Terapia_dial%C3%A9ctico-conductual" target="_blank" rel="noopener noreferrer">¿Qué es DBT?</a></li> 
+                        <li><a href="https://es.wikipedia.org/wiki/Mindfulness" target="_blank" rel="noopener noreferrer">Mindfulness</a></li> 
+                        <li><a href="https://www.nimh.nih.gov/health/topics/borderline-personality-disorder" target="_blank" rel="noopener noreferrer">Info sobre TLP (NIMH)</a></li> 
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contacto</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope" aria-hidden="true"></i> <a href="mailto:itfrombit.w74@gmail.com">itfrombit.w74@gmail.com</a></p> 
+                        <p><i class="fas fa-user-tie" aria-hidden="true"></i> Directora: Mayra Schwarzschild</p>
+                        <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Comunidad Global</p>
+                        <p><i class="fab fa-discord" aria-hidden="true"></i> <a href="https://discord.gg/92cYjcwZ" target="_blank" rel="noopener noreferrer">Únete a Discord</a></p> 
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023- <span id="currentYear"></span> Universo Borderline. Todos los derechos reservados.</p> 
+                <p><a href="#">Privacidad</a> | <a href="#">Términos</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Actualizar el año en el footer
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            // Hacer visibles las tarjetas de memes con un pequeño retraso
+            const memeCards = document.querySelectorAll('.meme-card');
+            memeCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('is-visible');
+                }, index * 100); // Pequeño retraso para un efecto de aparición escalonado
+            });
+
+            // Efecto de Header al Scroll
+            window.addEventListener('scroll', () => {
+                const header = document.getElementById('main-header');
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
