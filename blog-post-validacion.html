@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post: El Poder de la Validación - Universo Borderline</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Fredoka+One&family=Krona+One&family=Lobster&family=Major+Mono+Display&family=Monoton&family=Press+Start+2P&family=Caveat:wght@700&family=Sacramento&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-violet: #8A2BE2;
+            --secondary-cyan: #00CED1;
+            --accent-magenta: #FF00FF;
+            --accent-green: #00FF7F;
+            --accent-blue: #1E90FF;
+            --accent-yellow: #FFD700;
+            --accent-red: #FF4500;
+            
+            --text-color-light: #F0F0F0;
+            --text-color-medium: #A0A0A0;
+            
+            --card-bg: rgba(30, 30, 50, 0.92);
+            --border-color: rgba(138, 43, 226, 0.7);
+            --dark-bg: #0A0A20;
+
+            --primary-violet-rgb: 138, 43, 226;
+            --accent-blue-rgb: 30, 144, 255;
+            --accent-magenta-rgb: 255, 0, 255;
+            --accent-yellow-rgb: 255, 215, 0;
+            --accent-green-rgb: 0, 255, 127;
+            --secondary-cyan-rgb: 0, 206, 209;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: var(--dark-bg);
+            color: var(--text-color-light);
+            line-height: 1.8;
+            font-family: 'Raleway', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex; 
+            flex-direction: column; 
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(var(--primary-violet-rgb), 0.1) 0%, transparent 20%), 
+                radial-gradient(circle at 80% 70%, rgba(var(--accent-blue-rgb), 0.1) 0%, transparent 30%), 
+                radial-gradient(circle at 10% 80%, rgba(var(--accent-magenta-rgb), 0.1) 0%, transparent 25%);
+            background-size: 400% 400%; 
+            animation: gradientBackground 20s ease infinite;
+        }
+        
+        @keyframes gradientBackground {
+            0% { background-position: 0% 50%; } 
+            50% { background-position: 100% 50%; } 
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            width: 100%; 
+            max-width: 1100px; 
+            margin: 0 auto; 
+            padding: 0 20px; 
+            position: relative; 
+            z-index: 1;
+        }
+        
+        header {
+            background: rgba(10, 10, 32, 0.85); 
+            backdrop-filter: blur(12px); 
+            color: white; 
+            padding: 1rem 0; 
+            position: fixed; 
+            top: 0; 
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 2px solid var(--accent-magenta); 
+            box-shadow: 0 0 15px rgba(var(--accent-magenta-rgb), 0.3);
+            transition: all 0.4s ease;
+        }
+        
+        header.scrolled {
+            background: rgba(10, 10, 32, 0.95);
+            padding: 0.7rem 0;
+        }
+        
+        .header-container { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        
+        .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-decoration: none; 
+        }
+        
+        .logo:hover {
+            transform: rotate(-5deg) scale(1.05);
+        }
+        
+        .logo h1 { 
+            font-family: 'Monoton', cursive; 
+            font-size: 1.9rem; 
+            font-weight: 400;
+            background: linear-gradient(45deg, var(--accent-magenta), var(--accent-yellow), var(--accent-blue));
+            -webkit-background-clip: text; 
+            background-clip: text; 
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+        
+        .logo i { 
+            font-size: 2.2rem; 
+            color: var(--accent-green); 
+            animation: logoPulse 3s infinite alternate;
+        }
+        
+        @keyframes logoPulse {
+            0% { transform: scale(1); color: var(--accent-green); }
+            50% { transform: scale(1.1); color: var(--secondary-cyan); }
+            100% { transform: scale(1); color: var(--accent-blue); }
+        }
+        
+        nav ul { 
+            display: flex; 
+            list-style: none; 
+            gap: 10px; 
+        }
+        
+        nav a { 
+            color: var(--text-color-light); 
+            text-decoration: none; 
+            font-family: 'Comfortaa', sans-serif; 
+            font-size: 0.9rem; 
+            padding: 10px 15px; 
+            border-radius: 20px; 
+            transition: all 0.3s ease-out; 
+            position: relative;
+            background: transparent; 
+            border: 1px solid transparent; 
+        }
+        
+        nav a::before { 
+            content: ''; 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 0%; 
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--accent-magenta), var(--accent-blue), transparent);
+            opacity: 0.3; 
+            transition: width 0.4s ease; 
+            z-index: -1;
+            border-radius: 20px; 
+        }
+        
+        nav a:hover::before, 
+        nav a.active::before { 
+            width: 100%; 
+        } 
+        
+        nav a:hover, 
+        nav a.active {
+            color: var(--accent-yellow); 
+            background-color: rgba(0, 255, 255, 0.1); 
+            border: 1px solid var(--accent-blue); 
+            transform: translateY(-3px); 
+        }
+
+        .main-page-content { 
+            padding: 100px 0 4rem 0; 
+            flex-grow: 1; 
+        }
+
+        .blog-post-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-top: 2rem;
+        }
+
+        .blog-post-header h2 {
+            font-family: 'Playfair Display', serif; 
+            font-size: 3rem; 
+            font-weight: 700; 
+            color: var(--secondary-cyan); 
+            margin-bottom: 0.5rem;
+            text-transform: none; 
+            letter-spacing: 0.5px; 
+            display: inline-flex; 
+            align-items: center;
+            gap: 15px; 
+            background: linear-gradient(45deg, var(--accent-yellow), var(--primary-violet), var(--accent-blue));
+            -webkit-background-clip: text; 
+            background-clip: text; 
+            -webkit-text-fill-color: transparent;
+        }
+           .blog-post-header h2 i {
+            font-size: 2.6rem; 
+            color: var(--accent-green);
+        }
+        
+        .blog-post-meta {
+            font-size: 1rem;
+            color: var(--text-color-medium);
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        .blog-post-meta span i {
+            margin-right: 8px;
+            color: var(--accent-yellow);
+        }
+
+        .blog-content {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+            border: 1px solid var(--border-color);
+            margin-bottom: 3rem;
+        }
+
+        .blog-content h3 {
+            font-family: 'Krona One', sans-serif;
+            font-size: 1.8rem;
+            color: var(--accent-green);
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(var(--accent-green-rgb), 0.3);
+        }
+
+        .blog-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-color-light);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .blog-content ul {
+            list-style: none;
+            padding-left: 20px;
+            margin-bottom: 1.5rem;
+        }
+        .blog-content ul li {
+            margin-bottom: 0.8rem;
+            color: var(--text-color-light);
+            font-size: 1rem;
+            position: relative;
+        }
+        .blog-content ul li::before {
+            content: "\f00c"; /* FontAwesome check-circle */
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            color: var(--accent-blue);
+            position: absolute;
+            left: -20px;
+            top: 3px;
+        }
+
+        .blog-content blockquote {
+            border-left: 5px solid var(--accent-yellow);
+            padding-left: 20px;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--text-color-medium);
+            font-size: 1.1rem;
+        }
+        .blog-content blockquote p {
+            margin-bottom: 0;
+        }
+
+        .back-to-blog-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--accent-magenta), var(--accent-blue));
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.3s ease;
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 1.1rem;
+        }
+        .back-to-blog-btn:hover {
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-magenta));
+            transform: scale(1.05);
+        }
+        .back-to-blog-btn i {
+            margin-right: 10px;
+        }
+        
+        footer { 
+            background: rgba(10,10,32,0.97); 
+            color: white; 
+            padding: 4rem 0 2rem; 
+            position: relative; 
+            border-top: 2px solid var(--accent-blue); 
+            margin-top: auto; 
+        }
+        
+        .footer-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+            gap: 40px; 
+            margin-bottom: 3rem; 
+        }
+        
+        .footer-column h3 { 
+            color: var(--accent-yellow); 
+            margin-bottom: 1.5rem; 
+            position: relative; 
+            padding-bottom: 10px; 
+            font-size: 1.4rem; 
+            font-family: 'Fredoka One', cursive;
+        }
+        
+        .footer-column h3::after { 
+            content: ''; 
+            position: absolute; 
+            bottom: 0; 
+            left: 0; 
+            width: 50px; 
+            height: 3.5px; 
+            background: var(--accent-blue); 
+            border-radius: 1.5px; 
+        }
+        
+        .footer-links { list-style: none; padding-left:0; } 
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { 
+            color: var(--text-color-medium); 
+            text-decoration: none; 
+            transition: all 0.3s ease; 
+            display: inline-block; 
+            padding: 4px 0; 
+            font-family: 'Comfortaa', sans-serif; 
+        }
+        .footer-links a:hover { color: var(--accent-blue); transform: translateX(8px); }
+        
+        .contact-info { margin-top: 20px; }
+        .contact-info p { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            margin-bottom: 12px; 
+            font-size: 1.05rem; 
+            color: var(--text-color-medium); 
+            font-family: 'Comfortaa', sans-serif; 
+        }
+        .contact-info i { color: var(--accent-blue); flex-shrink:0; } 
+        
+        .copyright { 
+            text-align: center; 
+            padding-top: 2rem; 
+            border-top: 1px solid rgba(255, 255, 255, 0.07); 
+            color: #a090b0; 
+            font-size: 0.95rem; 
+            font-family: 'Comfortaa', sans-serif; 
+        }
+        .copyright a { color: var(--accent-yellow); text-decoration: none; transition: all 0.3s ease; } 
+        .copyright a:hover { color: var(--text-color-light); }
+        
+        .stars {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            pointer-events: none; z-index: -2; 
+        }
+        .star {
+            position: absolute; width: 2px; height: 2px; background: white;
+            border-radius: 50%; opacity: 0; animation: twinkle 5s infinite;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 0; transform: scale(1); }
+        }
+        .galaxy {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: radial-gradient(circle at center, transparent 20%, rgba(var(--primary-violet-rgb), 0.1) 70%, transparent 100%);
+            z-index: -1; opacity: 0.3; animation: rotateGalaxy 120s infinite linear;
+        }
+        @keyframes rotateGalaxy {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 900px) {
+            .header-container { flex-direction: column; gap: 12px; }
+            nav ul { flex-wrap: wrap; justify-content: center; gap: 7px; }
+            nav a { font-size: 0.8rem; padding: 7px 10px; }
+            .blog-post-header h2 { font-size: 2.6rem; }
+            .blog-post-header h2 i { font-size: 2.2rem; }
+            .blog-content { padding: 2rem; }
+            .blog-content h3 { font-size: 1.6rem; }
+        }
+        
+        @media (max-width: 600px) {
+            .main-page-content { padding-top: 130px; } 
+            .logo h1 { font-size: 1.6rem; }
+            nav ul { gap: 5px; }
+            nav a { font-size: 0.7rem; padding: 6px 7px; }
+            .blog-post-header h2 { font-size: 2rem; }
+            .blog-post-header h2 i { font-size: 1.8rem; }
+            .blog-post-meta { flex-direction: column; gap: 10px; font-size: 0.9rem; }
+            .blog-content { padding: 1.5rem; }
+            .blog-content h3 { font-size: 1.4rem; }
+            .blog-content p { font-size: 0.95rem; }
+            .back-to-blog-btn { padding: 10px 20px; font-size: 1rem; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="stars" id="stars"></div>
+    <div class="galaxy"></div>
+    
+    <header id="main-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo" aria-label="Universo Borderline Homepage"> 
+                <i class="fas fa-brain" aria-hidden="true"></i>
+                <h1>UNIVERSO BORDERLINE</h1> 
+            </a>
+            <nav aria-label="Navegación principal">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="cursos.html">Cursos</a></li> 
+                    <li><a href="blog.html" class="active" aria-current="page">Blog</a></li> 
+                    <li><a href="foro.html">Foro</a></li> 
+                    <li><a href="memes.html">Memes</a></li> 
+                    <li><a href="podcast.html">Podcast</a></li> 
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-page-content">
+        <div class="container">
+            <div class="blog-post-header">
+                <h2>El Poder de la Validación: Entendiendo y Aceptando Nuestras Emociones</h2>
+                <div class="blog-post-meta">
+                    <span><i class="fas fa-calendar-alt"></i> 25 de Mayo, 2025</span>
+                    <span><i class="fas fa-user-circle"></i> Lic. Marco Figueroa</span>
+                </div>
+            </div>
+
+            <article class="blog-content">
+                <p>La validación emocional es un pilar fundamental en la Terapia Dialéctico Comportamental (DBT) y en la construcción de relaciones saludables, tanto con nosotros mismos como con los demás. ¿Pero qué implica validar una emoción, especialmente cuando es intensa o parece irracional? No se trata de estar de acuerdo con la emoción o la acción que la acompaña, sino de reconocer y aceptar que la emoción existe y es comprensible dadas las circunstancias.</p>
+
+                <p>La validación crea un espacio de seguridad y comprensión, donde las emociones pueden ser exploradas y procesadas sin el temor al juicio. Es un acto de empatía profunda que desarma la vergüenza y el aislamiento, facilitando el camino hacia la regulación emocional y el cambio.</p>
+
+                <h3>¿Por Qué es Crucial la Validación?</h3>
+                <p>La falta de validación, a menudo llamada "invalidación", es una experiencia común en personas que luchan con la desregulación emocional, como en el caso del Trastorno Límite de la Personalidad (TLP). Escuchar frases como "no deberías sentirte así", "estás exagerando" o "supera eso" puede agravar el sufrimiento y la sensación de soledad.</p>
+                <p>Estudios demuestran que la invalidación crónica está correlacionada con mayores niveles de angustia psicológica, problemas de autoestima y dificultades interpersonales. Por el contrario, la validación:</p>
+                <ul>
+                    <li><strong>Reduce la intensidad emocional:</strong> Cuando una emoción es validada, el sistema nervioso tiende a calmarse. Un estudio de 2013 publicado en la revista <em>Emotion</em> mostró que la validación verbal de la ira reducía la actividad en la amígdala, la región cerebral asociada con el miedo y la respuesta de lucha o huida.</li>
+                    <li><strong>Fomenta la autoaceptación:</strong> Permite que las personas se vean a sí mismas y a sus experiencias de manera más compasiva, reduciendo la autocrítica.</li>
+                    <li><strong>Mejora la comunicación y las relaciones:</strong> Las personas se sienten escuchadas y comprendidas, lo que fortalece la confianza y la conexión. La investigación en psicología social indica que las parejas que practican la validación experimentan mayores niveles de satisfacción relacional.</li>
+                    <li><strong>Facilita el cambio:</strong> Paradoxalmente, al aceptar la emoción tal como es, se abre la puerta para explorarla y decidir si es útil o si se necesita una respuesta diferente. Esto se conoce como la "dialéctica de la aceptación y el cambio" en la DBT.</li>
+                </ul>
+
+                <h3>Niveles de Validación en DBT</h3>
+                <blockquote>
+                    <p>"Las emociones son como niños pequeños; necesitan ser vistas y escuchadas." <br> - Tara Brach</p>
+                </blockquote>
+                <p>En DBT, la validación se enseña en diferentes niveles, desde el más básico hasta el más profundo:</p>
+                <ul>
+                    <li><strong>Nivel 1: Escucha y Observación:</strong> Prestar atención genuina, hacer contacto visual, asentir. Estar presente.</li>
+                    <li><strong>Nivel 2: Reflejar:</strong> Repetir o parafrasear lo que la persona ha dicho para mostrar que la has escuchado con precisión.</li>
+                    <li><strong>Nivel 3: Articular lo no expresado:</strong> Nombrar la emoción o la experiencia que la persona podría estar sintiendo, incluso si no la ha dicho explícitamente.</li>
+                    <li><strong>Nivel 4: Validar en base a causas:</strong> Explicar cómo la emoción o la respuesta es comprensible, basándose en la historia, biología o circunstancias actuales de la persona.</li>
+                    <li><strong>Nivel 5: Validar como algo efectivo:</strong> Reconocer cómo la emoción o el comportamiento de la persona tiene sentido o es una respuesta efectiva para lograr un objetivo, incluso si no es la forma ideal.</li>
+                    <li><strong>Nivel 6: Validación radical o completa:</strong> Ver a la persona como capaz de manejar la experiencia, validando su capacidad inherente de resiliencia.</li>
+                </ul>
+                <p>Estadísticas del campo de la psicología sugieren que el uso consistente de técnicas de validación por parte de terapeutas puede aumentar la adherencia del paciente al tratamiento en un 40% y mejorar los resultados terapéuticos en un 25%, especialmente en tratamientos para trastornos de la personalidad.</p>
+
+                <h3>La Validación en la Vida Cotidiana</h3>
+                <p>La validación no es exclusiva de la terapia. Puedes practicarla en tus interacciones diarias:</p>
+                <ul>
+                    <li>Cuando un amigo comparte una frustración, en lugar de ofrecer soluciones inmediatas, di: "Entiendo por qué te sientes frustrado en esta situación."</li>
+                    <li>Cuando tu pareja exprese tristeza, reconoce: "Parece que estás realmente dolido por esto."</li>
+                    <li>Contigo mismo, ante una emoción difícil: "Es normal sentir esta ansiedad en este momento, dada la incertidumbre."</li>
+                </ul>
+                <p>Practicar la validación requiere escucha activa, empatía y la voluntad de suspender el juicio. Es una habilidad poderosa que transforma no solo cómo interactuamos con los demás, sino también cómo nos relacionamos con nuestro propio mundo emocional. Al validar, creamos puentes de conexión y facilitamos el crecimiento personal, haciendo del "Universo Borderline" un lugar más comprensivo para todos.</p>
+            </article>
+
+            <div style="text-align: center;">
+                <a href="blog.html" class="back-to-blog-btn"><i class="fas fa-arrow-left"></i> Volver al Blog</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Universo Borderline</h3>
+                    <p style="font-family: 'Comfortaa', sans-serif;">Un enfoque creativo y visual para comprender y manejar el Trastorno Límite de la Personalidad, con un foco en DBT.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Enlaces Útiles</h3> 
+                    <ul class="footer-links">
+                        <li><a href="https://es.wikipedia.org/wiki/Terapia_dial%C3%A9ctico-conductual" target="_blank" rel="noopener noreferrer">¿Qué es DBT?</a></li> 
+                        <li><a href="https://es.wikipedia.org/wiki/Mindfulness" target="_blank" rel="noopener noreferrer">Mindfulness</a></li> 
+                        <li><a href="https://www.nimh.nih.gov/health/topics/borderline-personality-disorder" target="_blank" rel="noopener noreferrer">Info sobre TLP (NIMH)</a></li> 
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contacto</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope" aria-hidden="true"></i> <a href="mailto:itfrombit.w74@gmail.com" style="color: var(--text-color-medium); text-decoration:none;">itfrombit.w74@gmail.com</a></p> 
+                        <p><i class="fas fa-user-tie" aria-hidden="true"></i> Directora: Mayra Schwarzschild</p>
+                        <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Comunidad Global</p>
+                        <p><i class="fab fa-discord" aria-hidden="true"></i> <a href="https://discord.gg/92cYjcwZ" target="_blank" rel="noopener noreferrer" style="color: var(--text-color-medium); text-decoration:none;">Únete a Discord</a></p> 
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023- <span id="currentYear"></span> Universo Borderline. Todos los derechos reservados. Un viaje hacia la comprensión emocional y la DBT.</p> 
+                <p><a href="#">Privacidad</a> | <a href="#">Términos</a> | <a href="#">Seguridad</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            const starsContainer = document.getElementById('stars');
+            if (starsContainer) {
+                const starsCount = 150;
+                for (let i = 0; i < starsCount; i++) {
+                    const star = document.createElement('div');
+                    star.classList.add('star');
+                    const size = Math.random() * 2.2 + 0.3;
+                    star.style.width = `${size}px`;
+                    star.style.height = `${size}px`;
+                    star.style.left = `${Math.random() * 100}%`;
+                    star.style.top = `${Math.random() * 100}%`;
+                    star.style.animationDelay = `${Math.random() * 6}s`; // Random delay for twinkle effect
+                    star.style.animationDuration = `${2.5 + Math.random() * 6.5}s`; // Random duration between 2.5s and 9s
+                    if (Math.random() > 0.65) {
+                        const colors = ['var(--primary-violet)', 'var(--secondary-cyan)', 'var(--accent-magenta)', 'var(--accent-green)'];
+                        star.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                        star.style.boxShadow = `0 0 ${Math.random() * 2.5 + 0.5}px ${star.style.backgroundColor}`;
+                    } else {
+                        star.style.boxShadow = `0 0 ${Math.random() * 1.5 + 0.3}px rgba(255,255,255,0.6)`;
+                    }
+                    starsContainer.appendChild(star);
+                }
+            }
+            
+            const currentPageFilename = window.location.pathname.split('/').pop() || 'index.html';
+            const navLinks = document.querySelectorAll('header nav a');
+            navLinks.forEach(link => {
+                link.classList.remove('active'); // Remove active class from all links
+                link.removeAttribute('aria-current');
+                const linkFilename = link.getAttribute('href').split('/').pop();
+                if (linkFilename === currentPageFilename || (currentPageFilename === 'index.html' && (linkFilename === '' || linkFilename === 'index.html'))) {
+                    link.classList.add('active');
+                    link.setAttribute('aria-current', 'page');
+                }
+            });
+            
+            const header = document.getElementById('main-header');
+            if(header){
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 40) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
