@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Efectividad Interpersonal en DBT - Universo Borderline</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Fredoka+One&family=Krona+One&family=Lobster&family=Major+Mono+Display&family=Monoton&family=Press+Start+2P&family=Caveat:wght@700&family=Sacramento&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-violet: #8A2BE2;
+            --secondary-cyan: #00CED1;
+            --accent-magenta: #FF00FF;
+            --accent-green: #00FF7F;
+            --accent-blue: #1E90FF; /* Primary accent for this page */
+            --accent-yellow: #FFD700;
+            --accent-red: #FF4500;
+            
+            --text-color-light: #F0F0F0;
+            --text-color-medium: #A0A0A0;
+            --text-color-dark: #333333; 
+            
+            --card-bg: rgba(30, 30, 50, 0.92);
+            --border-color: rgba(138, 43, 226, 0.7);
+            --dark-bg: #0A0A20;
+
+            --primary-violet-rgb: 138, 43, 226;
+            --accent-blue-rgb: 30, 144, 255; /* Primary accent for this page */
+            --accent-magenta-rgb: 255, 0, 255;
+            --accent-yellow-rgb: 255, 215, 0;
+            --accent-green-rgb: 0, 255, 127;
+            --secondary-cyan-rgb: 0, 206, 209;
+            --accent-red-rgb: 255, 69, 0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: var(--dark-bg);
+            color: var(--text-color-light);
+            line-height: 1.8;
+            font-family: 'Raleway', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex; 
+            flex-direction: column; 
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(var(--primary-violet-rgb), 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, rgba(var(--accent-blue-rgb), 0.1) 0%, transparent 30%),
+                radial-gradient(circle at 10% 80%, rgba(var(--accent-magenta-rgb), 0.1) 0%, transparent 25%);
+            background-size: 400% 400%; 
+            animation: gradientBackground 20s ease infinite;
+        }
+        
+        @keyframes gradientBackground {
+            0% { background-position: 0% 50%; } 
+            50% { background-position: 100% 50%; } 
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            width: 100%; 
+            max-width: 1100px; 
+            margin: 0 auto; 
+            padding: 0 20px; 
+            position: relative; 
+            z-index: 1;
+        }
+        
+        header {
+            background: rgba(10, 10, 32, 0.85); 
+            backdrop-filter: blur(12px); 
+            color: white; 
+            padding: 1rem 0; 
+            position: fixed; 
+            top: 0; 
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 2px solid var(--accent-magenta); 
+            box-shadow: 0 0 15px rgba(var(--accent-magenta-rgb), 0.3);
+            transition: all 0.4s ease;
+        }
+        
+        header.scrolled {
+            background: rgba(10, 10, 32, 0.95);
+            padding: 0.7rem 0;
+        }
+        
+        .header-container { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        
+        .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-decoration: none; 
+        }
+        
+        .logo:hover {
+            transform: rotate(-5deg) scale(1.05);
+        }
+        
+        .logo h1 { 
+            font-family: 'Monoton', cursive; 
+            font-size: 1.9rem; 
+            font-weight: 400;
+            background: linear-gradient(45deg, var(--accent-magenta), var(--accent-yellow), var(--accent-blue));
+            -webkit-background-clip: text; 
+            background-clip: text; 
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+        
+        .logo i { 
+            font-size: 2.2rem; 
+            color: var(--accent-green); 
+            animation: logoPulse 3s infinite alternate;
+        }
+        
+        @keyframes logoPulse {
+            0% { transform: scale(1); color: var(--accent-green); }
+            50% { transform: scale(1.1); color: var(--secondary-cyan); }
+            100% { transform: scale(1); color: var(--accent-blue); }
+        }
+        
+        nav ul { 
+            display: flex; 
+            list-style: none; 
+            gap: 10px; 
+        }
+        
+        nav a { 
+            color: var(--text-color-light); 
+            text-decoration: none; 
+            font-family: 'Comfortaa', sans-serif; 
+            font-size: 0.9rem; 
+            padding: 10px 15px; 
+            border-radius: 20px; 
+            transition: all 0.3s ease-out; 
+            position: relative;
+            background: transparent; 
+            border: 1px solid transparent; 
+        }
+        
+        nav a::before { 
+            content: ''; 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 0%; 
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--accent-magenta), var(--accent-blue), transparent);
+            opacity: 0.3; 
+            transition: width 0.4s ease; 
+            z-index: -1;
+            border-radius: 20px;
+        }
+        
+        nav a:hover::before, 
+        nav a.active::before { 
+            width: 100%; 
+        } 
+        
+        nav a:hover, 
+        nav a.active {
+            color: var(--accent-yellow); 
+            background-color: rgba(0, 255, 255, 0.1); 
+            border: 1px solid var(--accent-blue); 
+            transform: translateY(-3px); 
+        }
+
+        .main-page-content { 
+            padding: 100px 0 4rem 0; 
+            flex-grow: 1; 
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-top: 2rem;
+        }
+
+        .page-header h2 {
+            font-family: 'Playfair Display', serif; 
+            font-size: 2.8rem; 
+            font-weight: 700;
+            color: var(--accent-blue); 
+            margin-bottom: 0.5rem;
+            text-transform: none; 
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 8px rgba(var(--accent-blue-rgb),0.4); 
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .page-header h2 i {
+            font-size: 2.5rem; 
+        }
+
+        .page-header p.subtitle {
+            font-size: 1.2rem;
+            color: var(--text-color-medium);
+            max-width: 750px;
+            margin: 0 auto 2rem auto;
+        }
+        
+        .module-content-section { 
+            background: var(--card-bg);
+            padding: 30px 35px; 
+            border-radius: 15px;
+            margin-bottom: 2.5rem; 
+            border: 1px solid var(--border-color);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .module-content-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .module-content-section h3 {
+            font-family: 'Raleway', sans-serif; 
+            font-weight: 700; 
+            font-size: 1.9rem; 
+            color: var(--accent-blue); 
+            margin-top: 1rem; 
+            margin-bottom: 1.8rem; 
+            text-align: center;
+            border-bottom: 2px dashed var(--accent-blue); 
+            padding-bottom: 0.8rem; 
+        }
+         .module-content-section h4 {
+            font-family: 'Raleway', sans-serif; 
+            font-weight: 700; 
+            font-size: 1.5rem; 
+            color: var(--accent-yellow);
+            margin-top: 2.5rem; 
+            margin-bottom: 1.2rem; 
+            border-left: 4px solid var(--accent-yellow); 
+            padding-left: 15px; 
+        }
+        .module-content-section h5 {
+            font-family: 'Raleway', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--secondary-cyan); 
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .module-content-section p, 
+        .module-content-section li { 
+            font-size: 1.1rem;
+            text-align: justify;
+            margin-bottom: 1.2rem; 
+            color: var(--text-color-light);
+            line-height: 1.9; 
+        }
+        .module-content-section ul,
+        .module-content-section ol {
+            list-style: none;
+            padding-left: 0; 
+            margin-bottom: 1.5rem;
+        }
+        .module-content-section ul li {
+            padding-left: 30px; 
+            position: relative;
+        }
+        .module-content-section ul li::before {
+            content: '\f00c'; 
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            color: var(--accent-blue); 
+            position: absolute;
+            left: 0;
+            top: 4px; 
+            font-size: 1em; 
+        }
+         .module-content-section ol li {
+            padding-left: 10px; 
+            margin-left: 20px; 
+            list-style-position: outside;
+        }
+        .module-content-section ol {
+            list-style-type: decimal; 
+        }
+        .module-content-section strong {
+            color: var(--accent-green); 
+            font-weight: 700;
+        }
+        .module-content-section em {
+            color: var(--secondary-cyan); 
+            font-style: italic;
+        }
+        .module-content-section blockquote {
+            border-left: 5px solid var(--accent-green); 
+            padding: 15px 25px;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--text-color-medium);
+            background-color: rgba(var(--accent-green-rgb), 0.08);
+            border-radius: 0 10px 10px 0;
+            font-size: 1.05rem;
+        }
+        .module-content-section blockquote p {
+            margin-bottom: 0;
+            text-align: left;
+        }
+        .example-box {
+            background-color: rgba(var(--accent-yellow-rgb), 0.05); 
+            border: 1px dashed var(--accent-yellow);
+            padding: 20px;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+        .example-box h5 {
+            color: var(--accent-yellow);
+            margin-top: 0;
+            font-family: 'Raleway', sans-serif; 
+            font-weight: 700;
+        }
+        
+        .breadcrumb {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+        .breadcrumb a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .breadcrumb a:hover {
+            color: var(--accent-yellow);
+        }
+        .breadcrumb span {
+            color: var(--text-color-medium);
+        }
+
+        .back-to-link-container {
+            text-align: center;
+            margin-top: 2.5rem; 
+            margin-bottom: 1rem; 
+            display: flex; 
+            justify-content: center; 
+            gap: 1rem; 
+            flex-wrap: wrap; 
+        }
+        .back-to-btn {
+            display: inline-flex; 
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(45deg, var(--secondary-cyan), var(--accent-green)); 
+            color: var(--dark-bg); 
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            font-family: 'Comfortaa', sans-serif;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 3px 10px rgba(var(--secondary-cyan-rgb), 0.4); 
+        }
+        .back-to-btn:hover {
+            background: linear-gradient(45deg, var(--accent-green), var(--secondary-cyan)); 
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 5px 15px rgba(var(--accent-green-rgb), 0.5); 
+        }
+        .back-to-btn i {
+            font-size: 1em; 
+        }
+        
+        footer { 
+            background: rgba(10,10,32,0.97); 
+            color: white; 
+            padding: 4rem 0 2rem; 
+            position: relative; 
+            border-top: 2px solid var(--accent-blue); 
+            margin-top: auto; 
+        }
+        
+        .footer-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+            gap: 40px; 
+            margin-bottom: 3rem; 
+        }
+        
+        .footer-column h3 { 
+            color: var(--accent-yellow); 
+            margin-bottom: 1.5rem; 
+            position: relative; 
+            padding-bottom: 10px; 
+            font-size: 1.4rem; 
+            font-family: 'Fredoka One', cursive;
+        }
+        
+        .footer-column h3::after { 
+            content: ''; 
+            position: absolute; 
+            bottom: 0; 
+            left: 0; 
+            width: 50px; 
+            height: 3.5px; 
+            background: var(--accent-blue); 
+            border-radius: 1.5px; 
+        }
+        
+        .footer-links { list-style: none; padding-left:0; } 
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { 
+            color: var(--text-color-light);
+            text-decoration: none; 
+            transition: all 0.3s ease; 
+            display: inline-block; 
+            padding: 4px 0; 
+            font-family: 'Comfortaa', sans-serif; 
+        }
+        .footer-links a:hover { color: var(--accent-yellow); transform: translateX(8px); }
+        
+        .contact-info { margin-top: 20px; }
+        .contact-info p { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            margin-bottom: 12px; 
+            font-size: 1.05rem; 
+            color: var(--text-color-medium); 
+        }
+        .contact-info i { color: var(--accent-blue); } 
+        
+        .copyright { 
+            text-align: center; 
+            padding-top: 2rem; 
+            border-top: 1px solid rgba(255, 255, 255, 0.07); 
+            color: #a090b0; 
+            font-size: 0.95rem; 
+        }
+        .copyright a { color: var(--accent-yellow); text-decoration: none; transition: all 0.3s ease; } 
+        .copyright a:hover { color: var(--text-color-light); }
+        
+        .stars {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            pointer-events: none; z-index: -2; 
+        }
+        .star {
+            position: absolute; width: 2px; height: 2px; background: white;
+            border-radius: 50%; opacity: 0; animation: twinkle 5s infinite;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+            100% { opacity: 0; transform: scale(1); }
+        }
+        .galaxy {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: radial-gradient(circle at center, transparent 20%, rgba(var(--primary-violet-rgb), 0.1) 70%, transparent 100%);
+            z-index: -1; opacity: 0.3; animation: rotateGalaxy 120s infinite linear;
+        }
+        @keyframes rotateGalaxy {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 900px) {
+            .header-container { flex-direction: column; gap: 12px; }
+            nav ul { flex-wrap: wrap; justify-content: center; gap: 7px; }
+            nav a { font-size: 0.8rem; padding: 7px 10px; }
+            .page-header h2 { font-size: 2.2rem; } 
+            .module-content-section h3 {font-size: 1.7rem;} 
+            .module-content-section h4 {font-size: 1.3rem;} 
+        }
+        
+        @media (max-width: 600px) {
+            .main-page-content { padding-top: 130px; } 
+            .logo h1 { font-size: 1.6rem; }
+            nav ul { gap: 5px; }
+            nav a { font-size: 0.7rem; padding: 6px 7px; }
+            .page-header h2 { font-size: 2rem; } 
+            .page-header p.subtitle { font-size: 1rem; }
+            .module-content-section { padding: 20px; }
+            .module-content-section h3 {font-size: 1.6rem;} 
+            .module-content-section h4 {font-size: 1.2rem;} 
+            .module-content-section p,
+            .module-content-section li {font-size: 1rem;} 
+            .back-to-btn { padding: 10px 20px; font-size: 0.9rem;}
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <div class="galaxy"></div>
+    
+    <header id="main-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo" aria-label="Universo Borderline Homepage"> 
+                <i class="fas fa-brain" aria-hidden="true"></i>
+                <h1>UNIVERSO BORDERLINE</h1> 
+            </a>
+            <nav aria-label="Navegación principal">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="cursos.html" class="active" aria-current="page">Cursos</a></li> 
+                    <li><a href="blog.html">Blog</a></li> 
+                    <li><a href="foro.html">Foros</a></li> 
+                    <li><a href="memes.html">Memes</a></li> 
+                    <li><a href="podcast.html">Podcast</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-page-content">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Inicio</a> &gt; 
+                <a href="cursos.html">Cursos</a> &gt; 
+                <a href="dbt.html">DBT</a> &gt; 
+                <span>Efectividad Interpersonal</span>
+            </div>
+
+            <div class="page-header">
+                <h2><i class="fas fa-users"></i> Efectividad Interpersonal en DBT</h2>
+                <p class="subtitle">
+                    Construyendo relaciones saludables, manteniendo el autorespeto y logrando tus objetivos en las interacciones. Una guía completa.
+                </p>
+            </div>
+
+            <section class="module-content-section">
+                <h3><i class="fas fa-people-arrows"></i> Navegando el Complejo Mundo de las Relaciones</h3>
+                <p>
+                    Las relaciones interpersonales son una parte intrínseca y fundamental de la experiencia humana, fuentes potenciales de gran alegría, apoyo y significado. Sin embargo, para muchas personas, especialmente aquellas que experimentan una intensa <strong>desregulación emocional</strong> (como en el Trastorno Límite de la Personalidad), las interacciones pueden convertirse en un campo minado, generando estrés significativo, malentendidos dolorosos y un profundo malestar. El módulo de <strong>Efectividad Interpersonal</strong> de la Terapia Dialéctico Conductual (DBT), desarrollado por Marsha M. Linehan, se enfoca precisamente en equipar a los individuos con un conjunto de habilidades prácticas y estratégicas para navegar estas complejidades.
+                </p>
+                <p>
+                    El objetivo primordial de este módulo no es simplemente "llevarse bien con la gente", sino aprender a interactuar con otros de manera que se puedan <strong>alcanzar los objetivos personales legítimos</strong>, <strong>mantener y mejorar relaciones importantes</strong> y, crucialmente, <strong>preservar y fortalecer el autorespeto</strong> en el proceso. Estas tres metas a menudo pueden parecer en conflicto, y es precisamente en la gestión de esta tensión dialéctica donde residen la potencia y la sabiduría de estas habilidades.
+                </p>
+                <p>
+                    Las habilidades de efectividad interpersonal nos enseñan a encontrar un equilibrio funcional entre nuestras propias necesidades, deseos y límites, y las necesidades, deseos y límites de los demás. Nos capacitan para comunicarnos de manera clara, directa y asertiva, en lugar de recurrir a la pasividad, la agresividad o la manipulación pasivo-agresiva. Además, proporcionan herramientas para manejar los desacuerdos y conflictos de una forma más constructiva y menos dañina para las relaciones. En esencia, se trata de ser <em>efectivos</em> en nuestras interacciones, lo que implica lograr lo que queremos de una manera que honre nuestra integridad y no queme los puentes que nos conectan con los demás.
+                </p>
+                 <blockquote>
+                     <p>"La efectividad interpersonal no se trata de ganar todas las batallas, sino de construir puentes y mantener el respeto propio, incluso cuando no obtenemos exactamente lo que queremos."</p>
+                 </blockquote>
+            </section>
+
+            <section class="module-content-section">
+                <h3><i class="fas fa-bullseye"></i> Los Tres Objetivos Clave de la Efectividad Interpersonal</h3>
+                <p>La DBT organiza las habilidades de efectividad interpersonal en torno a tres objetivos principales, cada uno con su propio conjunto de habilidades mnemotécnicas:</p>
+                
+                <h4>1. Efectividad en los Objetivos (Lograr lo que Quieres - DEAR MAN)</h4>
+                <p>Este conjunto de habilidades se utiliza cuando necesitas que alguien haga algo por ti, o cuando necesitas decir "no" a una petición de manera efectiva. El acrónimo <strong>DEAR MAN</strong> te guía paso a paso:</p>
+                <ul>
+                    <li>
+                        <strong>D - Describe:</strong> Describe la situación actual de manera objetiva y concisa, sin juicios ni interpretaciones. Cíñete a los hechos observables.
+                        <div class="example-box">
+                            <h5>Ejemplo (Pedir ayuda):</h5>
+                            <p>"He notado que en las últimas tres reuniones de equipo, he sido la única persona tomando notas y preparando el resumen posterior."</p>
+                            <h5>Ejemplo (Decir no):</h5>
+                            <p>"Entiendo que necesitas que cubra tu turno el sábado por la tarde."</p>
+                        </div>
+                    </li>
+                    <li>
+                        <strong>E - Expresa:</strong> Expresa tus sentimientos y opiniones sobre la situación utilizando declaraciones "yo". Sé claro sobre cómo te afecta la situación.
+                        <div class="example-box">
+                            <h5>Ejemplo (Pedir ayuda):</h5>
+                            <p>"Me siento un poco abrumada y creo que no es equitativo que esta tarea recaiga siempre en mí."</p>
+                            <h5>Ejemplo (Decir no):</h5>
+                            <p>"Me siento mal por no poder ayudarte, pero ya tengo un compromiso personal importante ese día que no puedo cambiar."</p>
+                        </div>
+                    </li>
+                    <li>
+                        <strong>A - Asertivamente Pide o Di No:</strong> Pide lo que quieres de forma clara y directa, o di "no" de manera inequívoca. No des rodeos ni esperes que la otra persona adivine tus necesidades.
+                        <div class="example-box">
+                            <h5>Ejemplo (Pedir ayuda):</h5>
+                            <p>"Me gustaría que pudiéramos rotar esta tarea entre los miembros del equipo, o que alguien más se encargue la próxima vez."</p>
+                            <h5>Ejemplo (Decir no):</h5>
+                            <p>"Así que, lamentablemente, no podré cubrir tu turno este sábado."</p>
+                        </div>
+                    </li>
+                    <li>
+                        <strong>R - Refuerza (Recompensa):</strong> Explica las consecuencias positivas para la otra persona (o para la relación, o para la situación) si obtienes lo que quieres o si aceptan tu "no". Hazles saber cómo se beneficiarán.
+                        <div class="example-box">
+                            <h5>Ejemplo (Pedir ayuda):</h5>
+                            <p>"Si compartimos esta responsabilidad, creo que todos estaremos más involucrados y yo podré concentrarme mejor en mis otras tareas, lo que beneficiará al proyecto."</p>
+                            <h5>Ejemplo (Decir no):</h5>
+                            <p>"Agradezco que hayas pensado en mí y espero que encuentres a alguien más. En otra ocasión, si puedo, estaré encantada de ayudar."</p>
+                        </div>
+                    </li>
+                    <li>
+                        <strong>M - Mantente Enfocado (Mindful):</strong> Mantén tu objetivo en mente. No te desvíes del tema, no te dejes llevar por discusiones secundarias ni ataques personales. Si la conversación se desvía, redirígela amablemente hacia tu petición o negativa (técnica del "disco rayado").
+                    </li>
+                    <li>
+                        <strong>A - Aparenta Seguridad (Confianza):</strong> Utiliza un tono de voz calmado pero firme, mantén contacto visual (si es culturalmente apropiado) y una postura corporal segura. Aunque por dentro sientas nervios, proyecta confianza.
+                    </li>
+                    <li>
+                        <strong>N - Negocia:</strong> Estate dispuesto a ceder un poco si es necesario y apropiado. La efectividad a menudo implica encontrar un compromiso. Pregunta qué soluciones alternativas podría haber.
+                    </li>
+                </ul>
+                <p><em>Practicar DEAR MAN ayuda a aumentar las probabilidades de conseguir tus objetivos sin dañar la relación ni tu autoestima.</em></p>
+            </section>
+
+            <section class="module-content-section">
+                <h4>2. Efectividad en las Relaciones (Mantener y Mejorar la Relación - GIVE)</h4>
+                <p>Estas habilidades se centran en cómo interactuar de manera que se preserve o mejore la relación con la otra persona, independientemente de si consigues tu objetivo principal. Son especialmente útiles cuando la relación es importante para ti. El acrónimo <strong>GIVE</strong> te guía:</p>
+                <ul>
+                    <li>
+                        <strong>G - Gentil (Sé Amable):</strong> Sé cortés y respetuoso en tu enfoque. Evita ataques personales, amenazas, juicios o sarcasmo. Trata a la otra persona con la amabilidad que te gustaría recibir.
+                    </li>
+                    <li>
+                        <strong>I - Interesado (Muestra Interés):</strong> Escucha activamente lo que la otra persona dice, sin interrumpir. Haz preguntas para clarificar y muestra interés genuino en su perspectiva, aunque no estés de acuerdo.
+                        <div class="example-box">
+                            <h5>Ejemplo:</h5>
+                            <p>"Entiendo que para ti es importante X, ¿podrías contarme un poco más sobre por qué es así?"</p>
+                        </div>
+                    </li>
+                    <li>
+                        <strong>V - Valida:</strong> Reconoce y valida los sentimientos, pensamientos, opiniones o dificultades de la otra persona, incluso si no los compartes. Validar no significa estar de acuerdo, sino mostrar que entiendes su perspectiva desde <em>su</em> punto de vista.
+                        <div class="example-box">
+                            <h5>Ejemplo:</h5>
+                            <p>"Puedo ver que esto te está causando mucho estrés" o "Tiene sentido que te sientas así, dada la situación."</p>
+                        </div>
+                    </li>
+                    <li>
+                        <strong>E - Easy Manner (Actitud Relajada y Sencilla):</strong> Intenta mantener una actitud ligera y relajada. Usa el humor (apropiado), sonríe, sé paciente. Evita la tensión excesiva o la solemnidad innecesaria.
+                    </li>
+                </ul>
+                <p><em>Las habilidades GIVE son cruciales para construir y mantener la confianza y la buena voluntad en tus relaciones.</em></p>
+            </section>
+
+            <section class="module-content-section">
+                <h4>3. Efectividad en el Autorespeto (Mantener tu Respeto Propio - FAST)</h4>
+                <p>Este conjunto de habilidades te ayuda a actuar de una manera que te haga sentir bien contigo mismo y mantener tu autorespeto, especialmente en situaciones interpersonales difíciles. El acrónimo <strong>FAST</strong> es tu guía:</p>
+                <ul>
+                    <li>
+                        <strong>F - Fair (Sé Justo):</strong> Sé justo contigo mismo y con la otra persona. Reconoce tus derechos y necesidades, así como los de la otra persona. No te aproveches ni permitas que se aprovechen de ti.
+                    </li>
+                    <li>
+                        <strong>A - Apologies (Sin Disculpas Excesivas):</strong> No te disculpes innecesariamente por existir, por tener una opinión, por necesitar algo o por decir "no" cuando es apropiado. Disculparse en exceso puede minar tu autorespeto.
+                    </li>
+                    <li>
+                        <strong>S - Stick to Values (Apégate a tus Valores):</strong> Actúa de acuerdo con tus propios valores y principios morales. No comprometas tus valores fundamentales para obtener lo que quieres, para evitar un conflicto o para que le agrades a alguien.
+                        <div class="example-box">
+                            <h5>Ejemplo:</h5>
+                            <p>Si la honestidad es un valor importante para ti, no mientas para conseguir algo, aunque parezca más fácil a corto plazo.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <strong>T - Truthful (Sé Honesto):</strong> Sé veraz y evita la deshonestidad, el engaño o la exageración. Actuar con integridad refuerza el autorespeto.
+                    </li>
+                </ul>
+                <p><em>Las habilidades FAST te ayudan a sentirte orgulloso de cómo te manejas en las interacciones, independientemente del resultado.</em></p>
+            </section>
+
+            <section class="module-content-section">
+                <h3><i class="fas fa-balance-scale"></i> La Dialéctica de la Efectividad Interpersonal: Encontrando el Equilibrio</h3>
+                <p>Un aspecto central y sofisticado de la DBT es la <strong>dialéctica</strong>, que implica la búsqueda constante de la síntesis o el equilibrio entre dos polos que, a primera vista, pueden parecer opuestos o irreconciliables. En el contexto de la efectividad interpersonal, la dialéctica principal se manifiesta en la necesidad de balancear los tres objetivos clave:</p>
+                <ul>
+                    <li><strong>Conseguir tus objetivos legítimos</strong> (usando principalmente DEAR MAN).</li>
+                    <li><strong>Mantener y mejorar la relación</strong> (usando principalmente GIVE).</li>
+                    <li><strong>Mantener tu autorespeto y actuar según tus valores</strong> (usando principalmente FAST).</li>
+                </ul>
+                <p>La realidad de las interacciones humanas es que no siempre es posible maximizar los tres objetivos simultáneamente en cada situación. Aquí es donde entra en juego la <em>sabiduría interpersonal</em>: la capacidad de evaluar el contexto, nuestras prioridades y las posibles consecuencias para decidir qué objetivo (o combinación de objetivos) es más importante en ese momento específico.</p>
+                
+                <h5>Consideraciones para Priorizar Objetivos:</h5>
+                <ul>
+                    <li><strong>Importancia del Objetivo:</strong> ¿Qué tan crucial es para ti lograr esta petición específica o que se respete este límite? Si es algo vital, DEAR MAN podría tener más peso.</li>
+                    <li><strong>Importancia de la Relación:</strong> ¿Es esta una relación a largo plazo que valoras profundamente (ej. pareja, familiar cercano, amigo íntimo)? Si es así, GIVE será fundamental. ¿Es una interacción única o con alguien con quien no tienes un vínculo fuerte?</li>
+                    <li><strong>Importancia del Autorespeto:</strong> ¿La situación implica comprometer tus valores fundamentales o sentirte degradado? En estos casos, FAST debe ser prioritario.</li>
+                    <li><strong>Consecuencias a Corto y Largo Plazo:</strong> ¿Qué pasará inmediatamente si priorizas un objetivo sobre otro? ¿Y cuáles serán las consecuencias a largo plazo para ti, para la otra persona y para la relación?</li>
+                    <li><strong>Derechos y Responsabilidades:</strong> ¿Tienes derecho a lo que pides? ¿Tienes la responsabilidad de decir no? ¿La otra persona está violando tus derechos?</li>
+                </ul>
+
+                <div class="example-box">
+                    <h5>Ejemplo de Dialéctica en Acción:</h5>
+                    <p><strong>Situación:</strong> Tu jefe te pide constantemente que te quedes hasta tarde, afectando tu vida personal, un valor importante para ti (Autorespeto - FAST).</p>
+                    <p><strong>Posible Enfoque Dialéctico:</strong></p>
+                    <ol>
+                        <li><strong>Objetivo (DEAR MAN):</strong> "Me gustaría establecer un límite más claro sobre las horas extra."</li>
+                        <li><strong>Relación (GIVE):</strong> "Entiendo que a veces hay picos de trabajo y estoy dispuesto/a a colaborar, pero necesito un mejor equilibrio." (Validación, gentileza).</li>
+                        <li><strong>Autorespeto (FAST):</strong> "No puedo seguir comprometiendo mi salud y mi tiempo personal de esta manera de forma rutinaria; es importante para mí tener un balance." (Apégate a tus valores, sé justo contigo mismo).</li>
+                    </ol>
+                    <p>Aquí, podrías negociar (N de DEAR MAN) una solución, como planificar mejor las tareas o establecer un límite de horas extra semanales, logrando parte de tu objetivo, manteniendo una relación laboral funcional y respetando tu necesidad de descanso.</p>
+                </div>
+                <p>La práctica constante de evaluar estas prioridades en diferentes contextos te ayudará a volverte más flexible y sabio en tus interacciones.</p>
+            </section>
+
+            <section class="module-content-section">
+                <h3><i class="fas fa-user-cog"></i> Factores que Pueden Reducir la Efectividad Interpersonal y Cómo Abordarlos</h3>
+                <p>La DBT reconoce que, incluso conociendo las habilidades, diversos factores pueden obstaculizar nuestra capacidad para ser efectivos. Ser consciente de ellos es el primer paso para superarlos:</p>
+                <ul>
+                    <li>
+                        <strong>Falta de Habilidad o Conocimiento:</strong> A veces, simplemente no sabemos <em>qué</em> hacer o <em>cómo</em> decirlo.
+                        <ul>
+                            <li><em>Solución:</em> Aprendizaje activo de las habilidades DEAR MAN, GIVE, FAST. Buscar ejemplos, practicar con hojas de trabajo, y considerar el role-playing.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Mitos Interpersonales que se Interponen:</strong> Creencias disfuncionales sobre uno mismo, los demás o las relaciones.
+                        <div class="example-box">
+                            <h5>Ejemplos de Mitos y Contrapuntos DBT:</h5>
+                            <p><strong>Mito:</strong> "Pedir lo que necesito es egoísta." <br/><em>Contrapunto DBT:</em> "Tengo derecho a pedir mis necesidades de forma respetuosa; no hacerlo puede llevar al resentimiento."</p>
+                            <p><strong>Mito:</strong> "Si digo 'no', la gente se enfadará y me abandonará." <br/><em>Contrapunto DBT:</em> "Las personas que me respetan entenderán mis límites; establecerlos es parte de una relación sana."</p>
+                            <p><strong>Mito:</strong> "Debo complacer a los demás para que me quieran o acepten." <br/><em>Contrapunto DBT:</em> "Mi valía no depende de la aprobación constante de los demás; el autorespeto es clave."</p>
+                        </div>
+                        <ul>
+                            <li><em>Solución:</em> Identificar y desafiar estos mitos usando técnicas de reestructuración cognitiva y experimentación conductual (probar actuar de forma diferente y ver qué pasa).</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Emociones Intensas que Interfieren (Mente Emocional):</strong> Cuando emociones como la ira, el miedo intenso, la vergüenza paralizante o la tristeza abrumadora son muy fuertes, pueden "secuestrar" nuestra capacidad de pensar con claridad y aplicar las habilidades.
+                        <ul>
+                            <li><em>Solución:</em> Utilizar habilidades de Regulación Emocional para reducir la intensidad de la emoción antes de la interacción (ej. Acción Opuesta, habilidad PLEASE) y/o habilidades de Tolerancia al Malestar para sobrellevar la emoción durante la interacción sin actuar impulsivamente (ej. habilidades TIPP, ACEPTAS, Autocalma). A veces, posponer la conversación hasta estar más calmado es lo más efectivo.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Indecisión o Conflicto Interno de Objetivos:</strong> No estar seguro de lo que se quiere, si se tiene el derecho a pedirlo, o tener objetivos que entran en conflicto (ej. querer cercanía pero temer la intimidad).
+                        <ul>
+                            <li><em>Solución:</em> Usar habilidades de Mindfulness para conectar con la Mente Sabia y clarificar valores y prioridades. Realizar un análisis de pros y contras para diferentes cursos de acción.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>El Entorno o las Características de la Otra Persona:</strong> A veces, el entorno puede ser invalidante, o la otra persona puede ser particularmente difícil, no receptiva, o habilidosa en la manipulación.
+                        <ul>
+                            <li><em>Solución:</em> Evaluar el poder relativo en la situación. A veces, la efectividad puede implicar aceptar que no se puede cambiar a la otra persona, establecer límites muy firmes, buscar apoyo externo (ej. un supervisor, un mediador), o, en casos extremos y si es posible, decidir reducir el contacto o terminar la relación si es consistentemente dañina.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Preocupaciones a Corto Plazo vs. Consecuencias a Largo Plazo:</strong> A veces, ceder a corto plazo para evitar un conflicto inmediato puede parecer la opción "fácil", pero puede llevar a un patrón de sumisión que daña la relación y el autorespeto a largo plazo.
+                        <ul>
+                            <li><em>Solución:</em> Practicar la visión a largo plazo. Preguntarse: "¿Cómo me sentiré conmigo mismo/a mañana, la próxima semana, el próximo año si actúo de esta manera?" Considerar los efectos acumulativos de nuestras elecciones interpersonales.</li>
+                        </ul>
+                    </li>
+                     <li>
+                        <strong>Fatiga o Agotamiento:</strong> Cuando estamos física o emocionalmente agotados, nuestra capacidad para ser efectivos disminuye.
+                        <ul>
+                            <li><em>Solución:</em> Priorizar el autocuidado (habilidad PLEASE). Reconocer cuándo necesitamos descansar y recargar energías antes de abordar interacciones difíciles.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="module-content-section">
+                <h3><i class="fas fa-hands-helping"></i> Practicando y Fortaleciendo tus Habilidades Interpersonales: Un Proceso Continuo</h3>
+                <p>Como cualquier conjunto de habilidades complejas, la efectividad interpersonal no se domina de la noche a la mañana. Requiere práctica constante, paciencia y autocompasión. Aquí hay algunas estrategias para fortalecer estas habilidades:</p>
+                <ul>
+                    <li><strong>Comienza con Situaciones de Bajo Riesgo:</strong> No intentes aplicar DEAR MAN por primera vez en una confrontación con tu jefe sobre un tema crítico. Practica pidiendo cosas pequeñas a amigos o familiares, o diciendo "no" a peticiones menores donde las consecuencias no sean tan altas.</li>
+                    <li><strong>Usa Hojas de Trabajo y Planificación Escrita:</strong> Antes de una interacción importante, tómate el tiempo para planificar. Escribe tus puntos DEAR MAN, considera qué habilidades GIVE y FAST serán relevantes. Esto ayuda a clarificar tus objetivos y a sentirte más preparado.</li>
+                    <li><strong>Role-Playing (Juego de Roles):</strong> Esta es una herramienta invaluable. Practica la interacción con un terapeuta, un amigo de confianza, un familiar comprensivo o en un grupo de habilidades DBT. El role-playing te permite ensayar diferentes enfoques, recibir feedback constructivo y reducir la ansiedad antes de la situación real.</li>
+                    <li><strong>Visualización:</strong> Imagina la interacción desarrollándose de manera efectiva. Visualízate aplicando las habilidades con calma y confianza. Esto puede aumentar tu autoeficacia.</li>
+                    <li><strong>Mindfulness Antes, Durante y Después:</strong>
+                        <ul>
+                            <li><strong>Antes:</strong> Usa mindfulness para calmarte, conectar con tu Mente Sabia y clarificar tus objetivos y valores.</li>
+                            <li><strong>Durante:</strong> Intenta mantener una conciencia mindful de tus emociones, pensamientos e impulsos, así como de las reacciones de la otra persona. Esto te ayuda a mantenerte enfocado (M de DEAR MAN) y a ajustar tu enfoque si es necesario.</li>
+                            <li><strong>Después:</strong> Dedica un momento a observar cómo te sientes, qué pensamientos surgen, sin juicio.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Revisa y Aprende de Cada Interacción (Análisis en Cadena Interpersonal):</strong> Después de una interacción, especialmente si fue difícil o no salió como esperabas, reflexiona (quizás por escrito):
+                        <ul>
+                            <li>¿Cuál era mi objetivo? ¿Lo logré?</li>
+                            <li>¿Qué habilidades usé? ¿Cuáles fueron efectivas? ¿Cuáles no?</li>
+                            <li>¿Qué factores internos (emociones, pensamientos, mitos) interfirieron?</li>
+                            <li>¿Qué factores externos influyeron?</li>
+                            <li>¿Qué podría hacer diferente la próxima vez para ser más efectivo?</li>
+                        </ul>
+                        Sé autocompasivo en este proceso; cada interacción es una oportunidad de aprendizaje.
+                    </li>
+                    <li><strong>Pide Feedback (si es apropiado y seguro):</strong> De personas de confianza que presenciaron la interacción o con quienes tienes una relación sólida, puedes pedir feedback específico sobre cómo te comunicaste (ej. "¿Fui claro?", "¿Parecía respetuoso?").</li>
+                    <li><strong>Celebra los Pequeños Éxitos:</strong> Reconoce y refuerza tus propios esfuerzos y progresos, por pequeños que sean. Cada vez que intentas ser más efectivo, estás fortaleciendo estas habilidades.</li>
+                </ul>
+            </section>
+
+            <section class="module-content-section">
+                <h3><i class="fas fa-road"></i> Beneficios a Largo Plazo de una Mayor Efectividad Interpersonal</h3>
+                <p>Invertir tiempo y esfuerzo constante en desarrollar y aplicar estas habilidades puede transformar profundamente la calidad de tu vida y tus relaciones:</p>
+                <ul>
+                    <li><strong>Relaciones Más Saludables, Estables y Satisfactorias:</strong> Menos conflictos destructivos, mayor comprensión mutua, conexiones más genuinas y profundas, y una mayor capacidad para reparar rupturas cuando ocurren.</li>
+                    <li><strong>Reducción Significativa del Estrés Interpersonal:</strong> Mayor capacidad para manejar desacuerdos, críticas y situaciones sociales difíciles sin un coste emocional excesivo o conductas desadaptativas.</li>
+                    <li><strong>Aumento Sostenido de la Autoestima y el Autorespeto:</strong> Sentirse competente, capaz y actuar de acuerdo con los propios valores en las relaciones refuerza una imagen positiva de uno mismo.</li>
+                    <li><strong>Mayor Capacidad para Satisfacer Necesidades Legítimas:</strong> Ser capaz de pedir lo que necesitas, establecer límites saludables y decir "no" de manera efectiva te empodera.</li>
+                    <li><strong>Mejora General del Bienestar Emocional y la Calidad de Vida:</strong> Las relaciones positivas y el sentido de competencia interpersonal son pilares fundamentales de la salud mental y la felicidad.</li>
+                    <li><strong>Disminución de Sentimientos de Soledad y Aislamiento:</strong> Al construir y mantener conexiones más auténticas.</li>
+                    <li><strong>Reducción de la Impulsividad en las Relaciones:</strong> Al tener un repertorio de habilidades más adaptativas para manejar situaciones difíciles.</li>
+                </ul>
+                <p>Al practicar consistentemente las habilidades de efectividad interpersonal, las personas pueden aprender a navegar el complejo y a menudo desafiante mundo de las relaciones humanas con mayor confianza, sabiduría y satisfacción, fomentando conexiones más profundas y un mayor sentido de bienestar personal y comunitario.</p>
+            </section>
+            
+            <div class="back-to-link-container">
+                <a href="tolerancia_malestar_dbt.html" class="back-to-btn"><i class="fas fa-arrow-left"></i> Volver a Tolerancia al Malestar</a>
+                <a href="dbt.html" class="back-to-btn"><i class="fas fa-check-circle"></i> Finalizar y Volver a DBT</a>
+                </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Universo Borderline</h3>
+                    <p style="font-family: 'Comfortaa', sans-serif;">Un enfoque creativo y visual para comprender y manejar el Trastorno Límite de la Personalidad, con un foco en DBT.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Enlaces Útiles</h3> 
+                    <ul class="footer-links">
+                        <li><a href="https://es.wikipedia.org/wiki/Terapia_dial%C3%A9ctico-conductual" target="_blank" rel="noopener noreferrer">¿Qué es DBT?</a></li> 
+                        <li><a href="https://es.wikipedia.org/wiki/Mindfulness" target="_blank" rel="noopener noreferrer">Mindfulness</a></li> 
+                        <li><a href="https://www.nimh.nih.gov/health/topics/borderline-personality-disorder" target="_blank" rel="noopener noreferrer">Info sobre TLP (NIMH)</a></li> 
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contacto</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> <a href="mailto:itfrombit.w74@gmail.com" style="color: var(--text-color-medium); text-decoration:none;">itfrombit.w74@gmail.com</a></p> 
+                        <p><i class="fas fa-user-tie"></i> Directora: Mayra Schwarzschild</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Comunidad Global</p>
+                        <p><i class="fab fa-discord"></i> <a href="https://discord.gg/92cYjcwZ" target="_blank" rel="noopener noreferrer" style="color: var(--text-color-medium); text-decoration:none;">Únete a Discord</a></p> 
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2023- <span id="currentYear"></span> Universo Borderline. Todos los derechos reservados.</p> 
+                <p><a href="privacidad.html">Privacidad</a> | <a href="terminos.html">Términos</a> | <a href="seguridad.html">Seguridad</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current year in footer
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Create animated stars
+            const starsContainer = document.getElementById('stars');
+            if (starsContainer) {
+                const starsCount = 150;
+                for (let i = 0; i < starsCount; i++) {
+                    const star = document.createElement('div');
+                    star.classList.add('star');
+                    const size = Math.random() * 2.2 + 0.3;
+                    star.style.width = `${size}px`;
+                    star.style.height = `${size}px`;
+                    star.style.left = `${Math.random() * 100}%`;
+                    star.style.top = `${Math.random() * 100}%`;
+                    star.style.animationDelay = `${Math.random() * 6}s`; 
+                    star.style.animationDuration = `${2.5 + Math.random() * 6.5}s`;
+                    if (Math.random() > 0.65) {
+                        const colors = ['var(--primary-violet)', 'var(--secondary-cyan)', 'var(--accent-magenta)', 'var(--accent-green)'];
+                        star.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                        star.style.boxShadow = `0 0 ${Math.random() * 2.5 + 0.5}px ${star.style.backgroundColor}`;
+                    } else {
+                        star.style.boxShadow = `0 0 ${Math.random() * 1.5 + 0.3}px rgba(255,255,255,0.6)`;
+                    }
+                    starsContainer.appendChild(star);
+                }
+            }
+            
+            // Active navigation link highlighting
+            const currentPageFilename = window.location.pathname.split('/').pop() || 'index.html'; 
+            const navLinks = document.querySelectorAll('header nav a');
+            navLinks.forEach(link => {
+                link.classList.remove('active'); 
+                link.removeAttribute('aria-current');
+                const linkFilename = link.getAttribute('href').split('/').pop().split('#')[0];
+                
+                if (linkFilename === 'cursos.html' && 
+                    (currentPageFilename === 'cursos.html' || 
+                     currentPageFilename === 'dbt.html' || 
+                     currentPageFilename === 'cbt.html' ||
+                     currentPageFilename.includes('_dbt') ||
+                     currentPageFilename.includes('_cbt') 
+                    )) {
+                    link.classList.add('active'); 
+                    link.setAttribute('aria-current', 'page');
+                } else if (linkFilename === currentPageFilename) {
+                    link.classList.add('active');
+                    link.setAttribute('aria-current', 'page');
+                }
+            });
+            
+            // Header scroll effect
+            const header = document.getElementById('main-header');
+            if(header){
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 40) { 
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                });
+            }
+            
+            // Intersection Observer for module content section animations
+            const animatedSections = document.querySelectorAll('.module-content-section'); 
+            if (animatedSections.length > 0) {
+                 const observerOptions = {
+                    root: null, 
+                    rootMargin: '0px',
+                    threshold: 0.05 
+                };
+                const observer = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                }, observerOptions);
+
+                animatedSections.forEach(section => {
+                    observer.observe(section);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
